@@ -1,5 +1,6 @@
 %{
     #include <string.h>
+    #include "parse.tab.h"
     const char * yycopy;
     const char * yycopy2;
     int value;
