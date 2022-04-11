@@ -90,3 +90,4 @@ or                       {return OR;}
 .                      printf("ERROR ");yyterminate(); 
 
 %%
+yywrap() {}

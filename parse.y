@@ -1,7 +1,9 @@
 %{
 	#include <stdio.h>
   #include <stdlib.h>
-  #include ""
+extern FILE *yyin;
+extern int yylex();
+
   int yyerror(const char *msg);
   int yylex();
 %}
@@ -140,32 +142,31 @@ lexp: ID
 
 %%
 
-/* user code */
-
 int main()
 {
 
 
-     FILE *fp;
+    FILE *fp;
     fp = fopen("input.txt","r");
     yyin = fp;
 
   int parse = yyparse();
   fclose(yyin);
-  display_table();
+ // display_table();
 
   if(parse == 0)
   {
     printf("Parser: VALID\n");
-  } 
+  }
 
   return 0;
 }
-
 int yyerror(const char *msg){
 	fprintf(stderr, "%s\n", msg);
   exit(1);
 }
+
+
 
 
 
