@@ -23,6 +23,10 @@
 %left MULTIPLY DIVIDE 
 %left PLUS MINUS
 %left UMINUS NOT
+%precedence "lexp"
+
+
+
 
  
 %%
@@ -59,34 +63,29 @@ declaration: type ID
 
 stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_PARENTHESIS  stmt 
   | FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_PARENTHESIS OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
-  | PRINTF '(' STRINGLITERAL ')' ';' 
-  | RETURN expr ';'
-  | '{' stmt-seq '}'
-  | type ID ';'       
-  | ID '=' expr ';' 
-  | ID '.' lexp '=' expr ';'
-  | ID '(' exprs ')' ';'
-  | ID '=' ID '(' exprs ')' ';'
+  | if_stmt
+  | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
+  | RETURN expr SEMICOL
+  | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
+  | TYPE ID SEMICOL
+  | lexp = expr SEMICOL
+  | ID ASSIGN expr SEMICOL
+  | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
+  | ID ASSIGN ID OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
 ;
 
-if_stmt: mt_stmt
-  | unmt_stmt
+
+
+if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
+  | IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES ELSE OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
 ;
 
-mt_stmt: IF '(' expr ')' THEN '{' mt_stmt '}' ELSE '{' mt_stmt '}'
-  | stmt
-;
-
-unmt_stmt: IF '(' expr ')' THEN '{' mt_stmt '}' 
-  | IF '(' expr ')' THEN '{' mt_stmt '}' ELSE '{' unmt_stmt '}'
-;
-
-exprs: 
+exprs: expr
     | expr "," exprs
 ;
 
-stmt-seq:
-  | stmt ',' stmt-seq
+stmt_seq:
+  | stmt stmt_seq
 ;
 
 type: TYPE
@@ -126,7 +125,7 @@ term: NUMBER
 ;
 
 lexp: ID
-  | ID '.' lexp
+  | ID FULLSTOP lexp
 ;
 
 
