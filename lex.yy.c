@@ -2017,14 +2017,3 @@ int main()
 	}
 #endif
 #line 92 "lex.l"
-
-int yywrap() {
- 
-}
-
- int main()
-{
-    printf("Enter a string ");
-    yylex();
-    return 0;
-}

@@ -90,13 +90,3 @@ or                       {return OR;}
 .                      printf("ERROR ");yyterminate(); 
 
 %%
-int yywrap() {
- 
-}
-
- int main()
-{
-    printf("Enter a string ");
-    yylex();
-    return 0;
-}
