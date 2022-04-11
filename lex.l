@@ -10,29 +10,32 @@
 %%
 
 
-[ \t\n]                 ;
-"//".*                    ;
-"##".*                    ;
-bool   printf("VALID \n");
-int printf("VALID \n");
-true printf("VALID \n");
-false printf("VALID \n");
-void printf("VALID \n");
-printf printf("VALID \n");
-string printf("VALID \n");
-struct printf("VALID \n");
-if printf("VALID \n");
-then printf("VALID \n");
-else printf("VALID \n");
-for printf("VALID \n");
-return printf("VALID \n");
+[ \t\n]                                   ;
+"//".*                                    ;
+"##".*                                    ;
+bool                    {return TYPE;}
+int                     {return TYPE;}
+true                    {return TRUE;}
+false                   {return FALSE;}
+void                    {return VOID;}
+printf                  {return PRINTF;}
+string                  {return TYPE;}
+struct                  {return STRUCT;}
+if                      {return IF;}
+then                    {return THEN;}
+else                    {return ELSE;}
+for                     {return FOR;}
+return                  {return RETURN;}
+and                      {return AND;}
+mod                       {return MOD;}
+or                       {return OR;}
 
 
-[a-zA-Z_][a-zA-Z0-9_]*   printf("VALID ");
+[a-zA-Z_][a-zA-Z0-9_]*   {return ID;}
 [0-9]+ {
     yycopy = strdup( yytext);
     if(yyleng < 5)
-        printf("VALID \n");
+        {return NUM;}
     else
     {
         if(yyleng == 5)
@@ -48,10 +51,10 @@ return printf("VALID \n");
                     if(x>7)
                         printf("Error \n");
                     else 
-                        printf("VALID \n");
+                        {return NUM;}
                 }
                 else 
-                    printf("VALID \n");
+                    {return NUM;}
             }
         }
         else 
@@ -59,26 +62,27 @@ return printf("VALID \n");
     }
       }
 [a-zA-Z0-9_-][0-9a-zaA-Z_-]+ printf("ERROR");
+";"                      {return SEMICOL;}
+"!"                     {return NOT;}
+"="                    {return ASSIGN;}
+"=="                   {return EQUALS;}
+"!="                    {return NOT_EQUALS;}
+"<"                    {return LESS_THAN;}
+"<="                   {return LESS_THAN_EQUALS;}
+">"                     {return GREATER_THAN;}
+">="                   {return GREATER_THAN_EQUALS;}
+"("                    {return OPENING_PARENTHESIS;};
+")"                     {return CLOSING_PARENTHESIS;}
+"{"                     {return OPENING_CURLY_BRACES;}
+"}"                    {return CLOSING_CURLY_BRACES;}
+"."                     {return FULLSTOP;}
+","                    {return COMMA;}
+"+"                    {return PLUS;}
+"-"                    {return MINUS;}
+"*"                     {return MULTIPLY;}
+"/"                     {return DIVIDE;}
 
-
-"="                    printf("VALID  ");
-"=="                    printf("VALID  ");
-"!="                    printf("VALID  ");
-"<"                    printf("VALID  ");
-"<="                    printf("VALID  ");
-">"                     printf("VALID  ");
-">="                   printf("VALID  ");
-"("                    printf("VALID  ");
-")"                     printf("VALID  ");
-"{"                     printf("VALID  ");
-"}"                    printf("VALID  ");
-"."                     printf("VALID  ");
-","                    printf("VALID  ");
-"+"                    printf("VALID  ");
-"-"                     printf("VALID   ");
-"*"                      printf("VALID   ");
-        
-\"(\\([abfnrtv][^'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*\"   { /* Valid string */ } printf("VALID ");
+\"(\\([abfnrtv][^'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*\"   { /* Valid string */ } {return STR;}
 \"(\\([abfnrtv'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])/\\  { /* ERROR escape sequence */ } printf("ERROR ");yyterminate();
 \"(\\([abfnrtv'?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*   { /* Missing terminating quote */ }  printf("ERROR ");yyterminate();
 
