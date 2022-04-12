@@ -38,41 +38,43 @@ extern int yylex();
  
 %%
 
-/*prog: proc progm
-  | struct progm
+/*
 
-//progm:
-  | proc progm
-  | struct progm
+//
 ;
 
-proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreDeclarations CLOSING_CURLY_BRACES
-;
 
-struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES     
+
 ;
 
 
 
 */
-
-statement:stmt
-	| proc
+prog: proc progm
+  | struct progm
+progm:
+  | proc progm
+  | struct progm  
+struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES     
+proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES
 ;
+
+/*
+statement:stmt
+	| prog
+;*/
 
 stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_PARENTHESIS  OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
   | RETURN expr SEMICOL
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
-  | type ID SEMICOL
-  | lexp EQUALS expr SEMICOL
+  | TYPE ID SEMICOL
+  | lexp ASSIGN expr SEMICOL
   | ID ASSIGN expr SEMICOL
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | ID ASSIGN ID OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | if_stmt
 
-;
-proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES
 ;
 
 if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
@@ -81,8 +83,9 @@ if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRAC
 expr : NUM {printf("k");}
 | STR
 |TRUE
-|FALSE{printf("valid")}
+|FALSE    {printf("valid")}
 |expr op expr
+|ID bool_op ID
 |MINUS expr %prec UMINUS
 |NOT expr
 |lexp
@@ -100,7 +103,9 @@ zeroOrMoreDeclarations:
    | declaration
    | declaration COMMA zeroOrMoreDeclarations
  ;
-
+oneOrMoreDeclarations: declaration 
+  | declaration COMMA oneOrMoreDeclarations
+;
 zeroOrMoreStatements:
   | if_stmt zeroOrMoreStatements
   | stmt zeroOrMoreStatements
@@ -110,7 +115,9 @@ declaration: type ID
 
 
 
-op: PLUS|MINUS|MULTIPLY|DIVIDE|MOD|AND|OR|EQUALS|GREATER_THAN|GREATER_THAN_EQUALS|LESS_THAN|LESS_THAN_EQUALS|NOT_EQUALS
+op: PLUS|MINUS|MULTIPLY|DIVIDE|MOD||AND|OR
+bool_op:
+  EQUALS|GREATER_THAN|GREATER_THAN_EQUALS|LESS_THAN|LESS_THAN_EQUALS|NOT_EQUALS
 stmt_seq:
   | stmt stmt_seq
 ;

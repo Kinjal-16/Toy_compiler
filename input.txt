@@ -1,9 +1,4 @@
-void main()
-{
-    if(a>0) then
-    {
-        int a;
-    }
-
-    i=i+1;
-}
+int a(){
+int y;
+int y;
+ }
