@@ -1,3 +1,9 @@
-void main() {
-    printf("hello");
-} // a comment
+void main()
+{
+    if(a>0) then
+    {
+        int a;
+    }
+
+    i=i+1;
+}

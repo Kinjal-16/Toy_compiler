@@ -15,28 +15,30 @@
 "//".*                                    ;
 "##".*                                    ;
 bool                    {return TYPE;}
-int                     {return TYPE;}
-true                    {return TRUE;}
-false                   {return FALSE;}
+int                     {printf("INt");return TYPE;}
+true                    {printf("No");return TRUE;}
+false                   {printf("False");return FALSE;}
 void                    {return VOID;}
-printf                  {return PRINTF;}
+printf                  {printf("Here \n");return PRINTF;}
 string                  {return TYPE;}
 struct                  {return STRUCT;}
 if                      {return IF;}
 then                    {return THEN;}
 else                    {return ELSE;}
 for                     {return FOR;}
-return                  {return RETURN;}
+return                  {printf("Here");return RETURN;}
 and                      {return AND;}
 mod                       {return MOD;}
 or                       {return OR;}
 
 
-[a-zA-Z_][a-zA-Z0-9_]*   {return ID;}
+[a-zA-Z_][a-zA-Z0-9_]*   {printf("ok");return ID;}
 [0-9]+ {
     yycopy = strdup( yytext);
     if(yyleng < 5)
-        {return NUM;}
+        {
+        printf("valid");
+        return NUM;}
     else
     {
         if(yyleng == 5)
@@ -52,10 +54,16 @@ or                       {return OR;}
                     if(x>7)
                         printf("Error \n");
                     else 
-                        {return NUM;}
+                        {
+                        printf("valid");
+
+                        return NUM;}
                 }
                 else 
-                    {return NUM;}
+                    {
+                    printf("valid");
+
+                    return NUM;}
             }
         }
         else 
@@ -68,7 +76,7 @@ or                       {return OR;}
 "="                    {return ASSIGN;}
 "=="                   {return EQUALS;}
 "!="                    {return NOT_EQUALS;}
-"<"                    {return LESS_THAN;}
+"<"                    {printf("valid");return LESS_THAN;}
 "<="                   {return LESS_THAN_EQUALS;}
 ">"                     {return GREATER_THAN;}
 ">="                   {return GREATER_THAN_EQUALS;}
@@ -83,7 +91,7 @@ or                       {return OR;}
 "*"                     {return MULTIPLY;}
 "/"                     {return DIVIDE;}
 
-\"(\\([abfnrtv][^'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*\"   { /* Valid string */ } {return STR;}
+\"(\\([abfnrtv][^'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*\"   { /* Valid string */ } {printf("Ok String \n");return STR;}
 \"(\\([abfnrtv'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])/\\  { /* ERROR escape sequence */ } printf("ERROR ");yyterminate();
 \"(\\([abfnrtv'?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*   { /* Missing terminating quote */ }  printf("ERROR ");yyterminate();
 
