@@ -176,7 +176,7 @@ int main()
 
 
 }
-int yyerror(){
+int yyerror(const char *msg){
 	fprintf(stderr, "%s\n", "My error");
   exit(1);
 }
