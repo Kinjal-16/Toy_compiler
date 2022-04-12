@@ -15,7 +15,7 @@
 "//".*                                    ;
 "##".*                                    ;
 bool                    {return TYPE;}
-int                     {printf("INt");return TYPE;}
+int                     {return TYPE;}
 true                    {printf("No");return TRUE;}
 false                   {printf("False");return FALSE;}
 void                    {return VOID;}
@@ -32,12 +32,13 @@ mod                       {return MOD;}
 or                       {return OR;}
 
 
-[a-zA-Z_][a-zA-Z0-9_]*   {printf("ok");return ID;}
+[a-zA-Z_][a-zA-Z0-9_]*   {
+yylval.id = (char *) strdup(yytext);
+return ID;}
 [0-9]+ {
     yycopy = strdup( yytext);
     if(yyleng < 5)
         {
-        printf("valid");
         return NUM;}
     else
     {

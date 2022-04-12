@@ -1,4 +1,15 @@
-int a(){
-int y;
-int y;
- }
+int abc(){
+    int a;
+    int b;
+}
+struct ab{
+    int d,
+    int e
+
+}
+struct abcd{
+    int f,
+    int g
+
+}
+
