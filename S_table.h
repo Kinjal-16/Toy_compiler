@@ -38,6 +38,8 @@ symrec *putsym(char *sym_name, char *type)
     strcpy(ptr->name, sym_name);
     ptr->type = (char *)malloc(strlen(type) + 1);
     strcpy(ptr->type, type);
+    printf(ptr->name);
+    printf(ptr->type);
     ptr->next = (struct symrec *)sym_table;
     initialize(ptr->attributes);
     sym_table = ptr;
@@ -70,7 +72,9 @@ sublist *put(char *sym, char *otype, sublist *head)
     ptr->name = (char *)malloc(strlen(sym) + 1);
     ptr->type = (char *)malloc(strlen(otype) + 1);
     strcpy(ptr->name, sym);
+    printf(ptr->name);
     strcpy(ptr->type, otype);
+    printf(ptr->type);
     ptr->next = head;
     head = ptr;
     return ptr;

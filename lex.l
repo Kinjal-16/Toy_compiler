@@ -15,17 +15,17 @@
 "//".*                                    ;
 "##".*                                    ;
 bool                    {
-    yylval.text = (char *) strdup(yytext);
+    yylval.id = (char *) strdup(yytext);
     return BOOL;}
 int                     {
-    yylval.text = (char *) strdup(yytext);
-    printf(yylval.id);
+    yylval.id = (char *) strdup(yytext);
+  
     return INT;}
 true                    {printf("No");return TRUE;}
 false                   {printf("False");return FALSE;}
 void                    {return VOID;}
 printf                  {printf("Here \n");return PRINTF;}
-string                  {yylval.text = (char *) strdup(yytext); 
+string                  {yylval.id = (char *) strdup(yytext); 
                         return STRING;}
 struct                  {return STRUCT;}
 if                      {return IF;}

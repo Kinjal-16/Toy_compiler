@@ -1,15 +1,4 @@
-int abc(){
-    int a;
-    int b;
+voidgit a abc(){
+   int a;
+   int b;
 }
-struct ab{
-    int d,
-    int e
-
-}
-struct abcd{
-    int f,
-    int g
-
-}
-

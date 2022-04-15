@@ -9,17 +9,18 @@
 int errors=0;
 char *procedure;
 char *t;
-install ( char *sym_name,char *type )
+ install ( char *sym_name,char *type )
 {  symrec *s;
    s = getsym (sym_name);
    if (s == 0)
+  {
         s = putsym (sym_name,type);
-   else {
+  } else {
    	errors++;
 
    }
 }
-installattributes(char *sym_name,char *type){
+int installattributes(char *sym_name,char *type){
   sublist *s ;
   s= getlist(procedure);
   if(s==0)
@@ -37,7 +38,7 @@ installattributes(char *sym_name,char *type){
   }
 }
 
-context_check( char *sym_name )
+int context_check( char *sym_name )
 { if ( getsym( sym_name ) == 0 )
      printf( "%s is an undeclared identifier\n", sym_name );
 }
@@ -100,7 +101,7 @@ progm:
   | proc progm
   | struct progm
 struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES {install($2,"null");  procedure = $2;}  
-proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;printf(t);}
+proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;}
 ;
 /*
 statement:stmt
@@ -111,7 +112,7 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_P
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
   | RETURN expr SEMICOL
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
-  | declaration SEMICOL
+  | type ID SEMICOL    {  printf("wwww"); installattributes($2,t);   }
   | lexp ASSIGN expr SEMICOL
   | ID ASSIGN expr SEMICOL
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
@@ -137,16 +138,20 @@ expr : NUM {printf("k");}
 exprs: 
     | expr COMMA exprs
 ;
-return_type: INT
-  |BOOL
-  |STRING
-  |VOID
-{t = $1;}
-;
+return_type: INT {t = $1;
+};
+  |BOOL{t = $1;
+printf(t);};
+  |STRING {t = $1;
+printf(t);};
+  |VOID  {t = $1;
+printf(t);};
+
 type: INT
   |BOOL
   |STRING
-{t = $1;}
+{t = $1;
+printf(t);}
  ;
 zeroOrMoreDeclarations:
    | declaration
@@ -159,7 +164,7 @@ zeroOrMoreStatements:
   | if_stmt zeroOrMoreStatements
   | stmt zeroOrMoreStatements
 ;
-declaration: type ID  {installattributes($2,t);   }
+declaration: type ID  
 ;
 
 
