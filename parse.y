@@ -19,7 +19,7 @@ install ( char *sym_name,char *type )
 
    }
 }
-installattributes(char *sym_name,car *type){
+installattributes(char *sym_name,char *type){
   sublist *s ;
   s= getlist(char *symname);
   if(s==0)
