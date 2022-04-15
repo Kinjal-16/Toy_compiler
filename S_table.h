@@ -9,6 +9,7 @@ struct sublist
 
     struct sublist *next;
 };
+
 struct symrec
 {
     char *name;
@@ -22,7 +23,10 @@ struct symrec
     struct symrec *next;
 };
 typedef struct symrec symrec;
-
+void initialize(symrec *head)
+{
+    head->attributes = (sublist *)0;
+}
 symrec *sym_table = (symrec *)0;
 
 symrec *putsym(char *sym_name)
@@ -38,13 +42,13 @@ symrec *putsym(char *sym_name)
     return ptr;
 }
 
-symrec *getsym(char *sym_name)
+sublist *getsym(char *sym_name)
 {
     symrec *ptr;
     for (ptr = sym_table; ptr != (symrec *)0;
          ptr = (symrec *)ptr->next)
         if (strcmp(ptr->name, sym_name) == 0)
-            return ptr;
+            return ptr->attributes;
     return 0;
 }
 typedef struct sublist sublist;
@@ -56,4 +60,20 @@ sublist *put(char *sym, char *otype, sublist *head)
     ptr->type = (char *)malloc(strlen(otype) + 1);
     strcpy(ptr->name, sym);
     strcpy(ptr->type, otype);
+    ptr->next = head;
+    head = ptr;
+}
+int *get(char *sym, char *otype, sublist *head)
+{
+    sublist *ptr;
+    for (ptr = head; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
+    {
+        if (strcmp(ptr->name, sym) == 0)
+        {
+            if (strcmp(ptr->type, otype) == 0)
+                return 1;
+        }
+    }
+
+    return 0;
 }
