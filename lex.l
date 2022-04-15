@@ -14,22 +14,27 @@
 [ \t\n]                                   ;
 "//".*                                    ;
 "##".*                                    ;
-bool                    {return TYPE;}
-int                     {return TYPE;}
+bool                    {
+    yylval.id = (char *) strdup(yytext);
+    return BOOL;}
+int                     {
+    yylval.id = (char *) strdup(yytext);
+    return INT;}
 true                    {printf("No");return TRUE;}
 false                   {printf("False");return FALSE;}
 void                    {return VOID;}
 printf                  {printf("Here \n");return PRINTF;}
-string                  {return TYPE;}
+string                  {yylval.id = (char *) strdup(yytext); 
+                        return STRING;}
 struct                  {return STRUCT;}
 if                      {return IF;}
 then                    {return THEN;}
 else                    {return ELSE;}
 for                     {return FOR;}
 return                  {printf("Here");return RETURN;}
-and                      {return AND;}
-mod                       {return MOD;}
-or                       {return OR;}
+and                     {return AND;}
+mod                     {return MOD;}
+or                      {return OR;}
 
 
 [a-zA-Z_][a-zA-Z0-9_]*   {

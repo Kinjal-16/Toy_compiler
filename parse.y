@@ -7,16 +7,29 @@
  extern FILE *yyin;
  extern int yylex();
 int errors=0;
-install ( char *sym_name )
+bool itis=false;
+char *procedure;
+install ( char *sym_name,char *type )
 {  symrec *s;
    s = getsym (sym_name);
-
    if (s == 0)
-        s = putsym (sym_name);
+        s = putsym (sym_name,type);
    else {
    	errors++;
 
    }
+}
+installattributes(char *sym_name,car *type){
+  sublist *s ;
+  s= getlist(char *symname);
+  if(s==0)
+  {
+    error++;
+  }
+  else
+  {
+  put(sym_name,type,s);
+  }
 }
 context_check( char *sym_name )
 { if ( getsym( sym_name ) == 0 )
@@ -78,9 +91,9 @@ prog: proc progm
 progm:
   | proc progm
   | struct progm
-struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES {install($2);   }
+struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES {install($2);  procedure = $2; itis=true;}  
 proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2);   }
-;
+;  {procedure = $2;itis=false;}
 
 /*
 statement:stmt
@@ -117,10 +130,14 @@ expr : NUM {printf("k");}
 exprs: 
     | expr COMMA exprs
 ;
-return_type: TYPE
+return_type: INT
+  |BOOL
+  |STRING
   | VOID
 ;
-type: TYPE
+type: INT
+  |BOOL
+  |STRING
   | VOID
  ;
 zeroOrMoreDeclarations:

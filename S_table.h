@@ -23,26 +23,36 @@ struct symrec
     struct symrec *next;
 };
 typedef struct symrec symrec;
-void initialize(symrec *head)
+void initialize(sublist *head)
 {
     head->attributes = (sublist *)0;
 }
 symrec *sym_table = (symrec *)0;
 
-symrec *putsym(char *sym_name)
+symrec *putsym(char *sym_name, char *type)
 {
     symrec *ptr;
     ptr = (symrec *)malloc(sizeof(symrec));
     ptr->name = (char *)malloc(strlen(sym_name) + 1);
     strcpy(ptr->name, sym_name);
-
-    ptr->value.var = 0; /* set value to 0 even if fctn.  */
+    ptr->type = (char *)malloc(strlen(type) + 1);
+    strcpy(ptr->type, type);
     ptr->next = (struct symrec *)sym_table;
+    initialize(ptr->attributes);
     sym_table = ptr;
     return ptr;
 }
+symrec *getsym(char *sym_name)
+{
+    symrec *ptr;
+    for (ptr = sym_table; ptr != (symrec *)0;
+         ptr = (symrec *)ptr->next)
+        if (strcmp(ptr->name, sym_name) == 0)
+            return ptr;
+    return 0;
+}
 
-sublist *getsym(char *sym_name)
+sublist *getlist(char *sym_name)
 {
     symrec *ptr;
     for (ptr = sym_table; ptr != (symrec *)0;
@@ -62,6 +72,7 @@ sublist *put(char *sym, char *otype, sublist *head)
     strcpy(ptr->type, otype);
     ptr->next = head;
     head = ptr;
+    return ptr;
 }
 int *get(char *sym, char *otype, sublist *head)
 {
