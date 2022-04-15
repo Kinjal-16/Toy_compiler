@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct sublist
+{
+    char *name;
+    char *type;
+
+    struct sublist *next;
+};
 struct symrec
 {
     char *name;
@@ -11,6 +18,7 @@ struct symrec
         double var;
         double (*fnctptr)();
     } value;
+    struct sublist *attributes;
     struct symrec *next;
 };
 typedef struct symrec symrec;
@@ -38,4 +46,14 @@ symrec *getsym(char *sym_name)
         if (strcmp(ptr->name, sym_name) == 0)
             return ptr;
     return 0;
+}
+typedef struct sublist sublist;
+sublist *put(char *sym, char *otype, sublist *head)
+{
+    sublist *ptr;
+    ptr = (sublist *)malloc(sizeof(sublist));
+    ptr->name = (char *)malloc(strlen(sym) + 1);
+    ptr->type = (char *)malloc(strlen(otype) + 1);
+    strcpy(ptr->name, sym);
+    strcpy(ptr->type, otype);
 }
