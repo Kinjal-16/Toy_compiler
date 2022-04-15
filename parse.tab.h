@@ -42,96 +42,100 @@
      NUM = 258,
      ID = 259,
      STR = 260,
-     TYPE = 261,
-     EQUALS = 262,
-     NOT_EQUALS = 263,
-     NOT = 264,
-     LESS_THAN = 265,
-     LESS_THAN_EQUALS = 266,
-     GREATER_THAN = 267,
-     GREATER_THAN_EQUALS = 268,
-     OPENING_PARENTHESIS = 269,
-     CLOSING_PARENTHESIS = 270,
-     OPENING_CURLY_BRACES = 271,
-     CLOSING_CURLY_BRACES = 272,
-     PLUS = 273,
-     MINUS = 274,
-     MULTIPLY = 275,
-     MOD = 276,
-     DIVIDE = 277,
-     IF = 278,
-     THEN = 279,
-     ELSE = 280,
-     TRUE = 281,
-     FALSE = 282,
-     SEMICOL = 283,
-     STRUCT = 284,
-     VOID = 285,
-     PRINTF = 286,
-     ASSIGN = 287,
-     FULLSTOP = 288,
-     COMMA = 289,
-     FOR = 290,
-     RETURN = 291,
-     EQU = 292,
-     AND = 293,
-     OR = 294,
-     UMINUS = 295
+     INT = 261,
+     BOOL = 262,
+     STRING = 263,
+     VOID = 264,
+     EQUALS = 265,
+     NOT_EQUALS = 266,
+     NOT = 267,
+     LESS_THAN = 268,
+     LESS_THAN_EQUALS = 269,
+     GREATER_THAN = 270,
+     GREATER_THAN_EQUALS = 271,
+     OPENING_PARENTHESIS = 272,
+     CLOSING_PARENTHESIS = 273,
+     OPENING_CURLY_BRACES = 274,
+     CLOSING_CURLY_BRACES = 275,
+     PLUS = 276,
+     MINUS = 277,
+     MULTIPLY = 278,
+     MOD = 279,
+     DIVIDE = 280,
+     IF = 281,
+     THEN = 282,
+     ELSE = 283,
+     TRUE = 284,
+     FALSE = 285,
+     SEMICOL = 286,
+     STRUCT = 287,
+     PRINTF = 288,
+     ASSIGN = 289,
+     FULLSTOP = 290,
+     COMMA = 291,
+     FOR = 292,
+     RETURN = 293,
+     EQU = 294,
+     AND = 295,
+     OR = 296,
+     UMINUS = 297
    };
 #endif
 /* Tokens.  */
 #define NUM 258
 #define ID 259
 #define STR 260
-#define TYPE 261
-#define EQUALS 262
-#define NOT_EQUALS 263
-#define NOT 264
-#define LESS_THAN 265
-#define LESS_THAN_EQUALS 266
-#define GREATER_THAN 267
-#define GREATER_THAN_EQUALS 268
-#define OPENING_PARENTHESIS 269
-#define CLOSING_PARENTHESIS 270
-#define OPENING_CURLY_BRACES 271
-#define CLOSING_CURLY_BRACES 272
-#define PLUS 273
-#define MINUS 274
-#define MULTIPLY 275
-#define MOD 276
-#define DIVIDE 277
-#define IF 278
-#define THEN 279
-#define ELSE 280
-#define TRUE 281
-#define FALSE 282
-#define SEMICOL 283
-#define STRUCT 284
-#define VOID 285
-#define PRINTF 286
-#define ASSIGN 287
-#define FULLSTOP 288
-#define COMMA 289
-#define FOR 290
-#define RETURN 291
-#define EQU 292
-#define AND 293
-#define OR 294
-#define UMINUS 295
+#define INT 261
+#define BOOL 262
+#define STRING 263
+#define VOID 264
+#define EQUALS 265
+#define NOT_EQUALS 266
+#define NOT 267
+#define LESS_THAN 268
+#define LESS_THAN_EQUALS 269
+#define GREATER_THAN 270
+#define GREATER_THAN_EQUALS 271
+#define OPENING_PARENTHESIS 272
+#define CLOSING_PARENTHESIS 273
+#define OPENING_CURLY_BRACES 274
+#define CLOSING_CURLY_BRACES 275
+#define PLUS 276
+#define MINUS 277
+#define MULTIPLY 278
+#define MOD 279
+#define DIVIDE 280
+#define IF 281
+#define THEN 282
+#define ELSE 283
+#define TRUE 284
+#define FALSE 285
+#define SEMICOL 286
+#define STRUCT 287
+#define PRINTF 288
+#define ASSIGN 289
+#define FULLSTOP 290
+#define COMMA 291
+#define FOR 292
+#define RETURN 293
+#define EQU 294
+#define AND 295
+#define OR 296
+#define UMINUS 297
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 30 "parse.y"
+#line 51 "parse.y"
 { 
   char *id;
   int a;
   char *string;
 }
 /* Line 1529 of yacc.c.  */
-#line 135 "parse.tab.h"
+#line 139 "parse.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

@@ -13,7 +13,3 @@ struct abcd{
 
 }
 
-
-int a
-int b
-ab   

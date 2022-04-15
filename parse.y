@@ -7,8 +7,8 @@
  extern FILE *yyin;
  extern int yylex();
 int errors=0;
-bool itis=false;
 char *procedure;
+char *t;
 install ( char *sym_name,char *type )
 {  symrec *s;
    s = getsym (sym_name);
@@ -19,24 +19,32 @@ install ( char *sym_name,char *type )
 
    }
 }
-installattributes(char *sym_name,car *type){
+installattributes(char *sym_name,char *type){
   sublist *s ;
-  s= getlist(char *symname);
+  s= getlist(procedure);
   if(s==0)
   {
-    error++;
+    errors++;
   }
   else
   {
-  put(sym_name,type,s);
+    if(get(sym_name,type,s)==0)
+      errors++;
+    else 
+    {
+      put(sym_name,type,s);
+    }
   }
 }
+
 context_check( char *sym_name )
 { if ( getsym( sym_name ) == 0 )
      printf( "%s is an undeclared identifier\n", sym_name );
 }
+
   int yyerror(const char *msg);
   int yylex();
+
 
 %}
 
@@ -47,11 +55,11 @@ context_check( char *sym_name )
 }
 
 %token NUM
-%token<string> ID STR TYPE
+%token<string> ID STR INT BOOL STRING VOID
 %token EQUALS NOT_EQUALS NOT LESS_THAN LESS_THAN_EQUALS GREATER_THAN GREATER_THAN_EQUALS
 %token OPENING_PARENTHESIS CLOSING_PARENTHESIS OPENING_CURLY_BRACES CLOSING_CURLY_BRACES
 %token PLUS MINUS MULTIPLY MOD DIVIDE
-%token IF THEN ELSE TRUE FALSE SEMICOL STRUCT  VOID PRINTF ASSIGN FULLSTOP COMMA FOR RETURN
+%token IF THEN ELSE TRUE FALSE SEMICOL STRUCT PRINTF ASSIGN FULLSTOP COMMA FOR RETURN
 %token EQU  AND OR
 
 %right EQUALS 
@@ -91,10 +99,9 @@ prog: proc progm
 progm:
   | proc progm
   | struct progm
-struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES {install($2);  procedure = $2; itis=true;}  
-proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2);   }
-;  {procedure = $2;itis=false;}
-
+struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES {install($2,"null");  procedure = $2;}  
+proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;printf(t);}
+;
 /*
 statement:stmt
 	| prog
@@ -133,12 +140,13 @@ exprs:
 return_type: INT
   |BOOL
   |STRING
-  | VOID
+  |VOID
+{t = $1;}
 ;
 type: INT
   |BOOL
   |STRING
-  | VOID
+{t = $1;}
  ;
 zeroOrMoreDeclarations:
    | declaration
@@ -151,7 +159,7 @@ zeroOrMoreStatements:
   | if_stmt zeroOrMoreStatements
   | stmt zeroOrMoreStatements
 ;
-declaration: type ID  {install($2);   }
+declaration: type ID  {installattributes($2,t);   }
 ;
 
 

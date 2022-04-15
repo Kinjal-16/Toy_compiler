@@ -23,9 +23,10 @@ struct symrec
     struct symrec *next;
 };
 typedef struct symrec symrec;
+typedef struct sublist sublist;
 void initialize(sublist *head)
 {
-    head->attributes = (sublist *)0;
+    head = (sublist *)0;
 }
 symrec *sym_table = (symrec *)0;
 
@@ -61,7 +62,7 @@ sublist *getlist(char *sym_name)
             return ptr->attributes;
     return 0;
 }
-typedef struct sublist sublist;
+
 sublist *put(char *sym, char *otype, sublist *head)
 {
     sublist *ptr;
