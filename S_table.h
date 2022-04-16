@@ -30,7 +30,7 @@ void initialize(sublist *head)
 }
 symrec *sym_table = (symrec *)0;
 
-symrec *putsym(char *sym_name, char *type)
+symrec *putsym(char *sym_name, char *type, sublist *list)
 {
     symrec *ptr;
     ptr = (symrec *)malloc(sizeof(symrec));
@@ -38,10 +38,8 @@ symrec *putsym(char *sym_name, char *type)
     strcpy(ptr->name, sym_name);
     ptr->type = (char *)malloc(strlen(type) + 1);
     strcpy(ptr->type, type);
-    printf(ptr->name);
-    printf(ptr->type);
     ptr->next = (struct symrec *)sym_table;
-    initialize(ptr->attributes);
+    ptr->attributes = list;
     sym_table = ptr;
     return ptr;
 }
@@ -72,10 +70,8 @@ sublist *put(char *sym, char *otype, sublist *head)
     ptr->name = (char *)malloc(strlen(sym) + 1);
     ptr->type = (char *)malloc(strlen(otype) + 1);
     strcpy(ptr->name, sym);
-    printf(ptr->name);
     strcpy(ptr->type, otype);
-    printf(ptr->type);
-    ptr->next = head;
+    ptr->next = (struct sublist *)head;
     head = ptr;
     return ptr;
 }
@@ -86,10 +82,53 @@ int *get(char *sym, char *otype, sublist *head)
     {
         if (strcmp(ptr->name, sym) == 0)
         {
-            if (strcmp(ptr->type, otype) == 0)
-                return 1;
+
+            return 0;
         }
     }
 
-    return 0;
+    return 1;
+}
+void displayTable()
+{
+    symrec *ptr;
+    for (ptr = sym_table; ptr != (symrec *)0; ptr = (symrec *)ptr->next)
+    {
+        sublist *j;
+        printf(ptr->name);
+        printf(":   ");
+        for (j = ptr->attributes; j != (sublist *)0; j = (sublist *)j->next)
+        {
+            printf(j->name);
+            printf("-->");
+        }
+        printf("null");
+        printf("\n");
+    }
+}
+sublist *returnT(char *name, sublist *head)
+{
+    sublist *ptr;
+    ptr = (sublist *)malloc(sizeof(sublist));
+    ptr->name = (char *)malloc(strlen(name) + 1);
+    ptr->type = (char *)malloc(strlen("return") + 1);
+    strcpy(ptr->name, name);
+    strcpy(ptr->type, "return");
+    ptr->next = (struct sublist *)head;
+    head = ptr;
+    return ptr;
+}
+int checkReturn(char *name, sublist *head)
+{
+    sublist *ptr;
+    for (ptr = head; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
+    {
+        if (strcmp(ptr->type, "return") == 0)
+        {
+            if (strcmp(ptr->name, name) == 0)
+                return 0;
+        }
+    }
+
+    return 1;
 }

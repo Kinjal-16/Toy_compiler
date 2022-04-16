@@ -21,10 +21,10 @@ int                     {
     yylval.id = (char *) strdup(yytext);
   
     return INT;}
-true                    {printf("No");return TRUE;}
-false                   {printf("False");return FALSE;}
+true                    {return TRUE;}
+false                   {return FALSE;}
 void                    {return VOID;}
-printf                  {printf("Here \n");return PRINTF;}
+printf                  {return PRINTF;}
 string                  {yylval.id = (char *) strdup(yytext); 
                         return STRING;}
 struct                  {return STRUCT;}
@@ -32,7 +32,7 @@ if                      {return IF;}
 then                    {return THEN;}
 else                    {return ELSE;}
 for                     {return FOR;}
-return                  {printf("Here");return RETURN;}
+return                  {;return RETURN;}
 and                     {return AND;}
 mod                     {return MOD;}
 or                      {return OR;}

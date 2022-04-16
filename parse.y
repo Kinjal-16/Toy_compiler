@@ -9,32 +9,46 @@
 int errors=0;
 char *procedure;
 char *t;
- install ( char *sym_name,char *type )
+sublist *current;
+char returnType;
+install ( char *sym_name,char *type )
 {  symrec *s;
    s = getsym (sym_name);
-   if (s == 0)
-  {
-        s = putsym (sym_name,type);
-  } else {
+   if (s == 0){
+        s = putsym (sym_name,type,current);
+        current=0;
+        current = (sublist *)0;
+   }
+   else {
+     
    	errors++;
 
    }
 }
-int installattributes(char *sym_name,char *type){
-  sublist *s ;
-  s= getlist(procedure);
-  if(s==0)
+installattributes(char *sym_name,char *type){
+  
+ 
+  if(get(sym_name,type,current)==0)
+  {
+    errors++;
+    
+  }
+  else 
+  {
+    current=put(sym_name,type,current);
+  }
+  
+}
+
+void checkReturnValid(char *name)
+{
+  if(checkReturn(name,current)==0)
   {
     errors++;
   }
   else
   {
-    if(get(sym_name,type,s)==0)
-      errors++;
-    else 
-    {
-      put(sym_name,type,s);
-    }
+    current=returnT(name,current);
   }
 }
 
@@ -110,9 +124,9 @@ statement:stmt
 
 stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_PARENTHESIS  OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
-  | RETURN expr SEMICOL
+  | RETURN expr SEMICOL 
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
-  | type ID SEMICOL    {  printf("wwww"); installattributes($2,t);   }
+  | type ID SEMICOL    { installattributes($2,t);   }
   | lexp ASSIGN expr SEMICOL
   | ID ASSIGN expr SEMICOL
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
@@ -124,10 +138,10 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_P
 if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
   | IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES ELSE OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
 ;
-expr : NUM {printf("k");}
+expr : NUM 
 | STR
 |TRUE
-|FALSE{printf("valid")}
+|FALSE{}
 |expr op expr
 |MINUS expr %prec UMINUS
 |NOT expr
@@ -146,12 +160,10 @@ printf(t);};
 printf(t);};
   |VOID  {t = $1;
 printf(t);};
-
-type: INT
-  |BOOL
+type: INT {t = $1;}
+  |BOOL {t = $1;}
   |STRING
-{t = $1;
-printf(t);}
+{t = $1;}
  ;
 zeroOrMoreDeclarations:
    | declaration
@@ -164,8 +176,9 @@ zeroOrMoreStatements:
   | if_stmt zeroOrMoreStatements
   | stmt zeroOrMoreStatements
 ;
-declaration: type ID  
+declaration: type ID   { installattributes($2,t);   }
 ;
+
 
 
 
@@ -223,13 +236,14 @@ int main()
   int parse = yyparse();
   fclose(yyin);
  // display_table();
+ displayTable();
  if(errors>0)
 {
 	yyerror("Invalid");
 	}
   if(parse == 0 )
   {
-    printf("Parser: VALID\n");
+    printf("VALID\n");
   }
 
   return 0;
@@ -237,7 +251,7 @@ int main()
 
 }
 int yyerror(const char *msg){
-	fprintf(stderr, "%s\n", "My error");
+	fprintf(stderr, "%s\n", "ERROR");
   exit(1);
 }
 
