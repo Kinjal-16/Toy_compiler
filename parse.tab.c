@@ -1996,14 +1996,16 @@ int main (int argc, char *argv[]){
 
     
 
-    if(flag == 0){
-        printf("VALID");
+    if(errors>0)
+{
+    yyerror("Invalid");
     }
-    else{
-        printf("ERROR");
-    }
+  if(flag == 0 )
+  {
+    printf("VALID\n");
+  }
 
-    return flag;
+    return 0;
 }
 int yyerror(const char *msg){
 	fprintf(stderr, "%s\n", "ERROR");
