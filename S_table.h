@@ -90,7 +90,6 @@ int *get(char *sym, sublist *head)
     return 1;
 }
 
-
 void displayTable()
 {
     symrec *ptr;

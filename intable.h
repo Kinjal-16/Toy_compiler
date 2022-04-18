@@ -26,44 +26,54 @@ intable *putable(char *sym_name, char *type, intable *list)
     list = ptr;
     return ptr;
 }
-intable *gettable(char *sym_name, char *type, intable *list)
+void getable(intable **head_ref, char *key)
 {
-    intable *ptr;
-    intable *pre;
-    int i = 0;
-    for (ptr = list; ptr != (intable *)0; ptr = (intable *)ptr->next)
+    printf("stable here");
+
+    struct intable *temp = *head_ref, *prev;
+
+    while (temp != NULL && strcmp(temp->name, key) == 0)
     {
-        i++;
-        if (i > 1)
+        *head_ref = temp->next;
+        free(temp);
+        temp = *head_ref;
+    }
+
+    while (temp != NULL)
+    {
+
+        while (temp != NULL && strcmp(temp->name, key) == 0)
         {
-            if (strcmp(ptr->name, sym_name) == 0)
-            {
-                if (strcmp(ptr->type, type) == 0)
-                {
-                    pre->next = ptr->next;
-                    free(ptr);
-                    return list;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
+            prev = temp;
+            temp = temp->next;
         }
-        else
+
+        // If key was not present in linked list
+        if (temp == NULL)
+            return;
+
+        prev->next = temp->next;
+
+        free(temp); // Free memory
+
+        // Update Temp for next iteration of outer loop
+        temp = prev->next;
+    }
+}
+void displayList(intable *stnode)
+{
+    struct intable *tmp;
+    if (stnode == NULL)
+    {
+        printf(" List is empty.");
+    }
+    else
+    {
+        tmp = stnode;
+        while (tmp != NULL)
         {
-            if (strcmp(ptr->name, sym_name) == 0)
-            {
-                if (strcmp(ptr->type, type) == 0)
-                {
-
-                    list = ptr->next;
-                    free(ptr);
-                }
-            }
-
-            pre = ptr;
+            printf(" Data = %s\n", tmp->name); // prints the data of current node
+            tmp = tmp->next;                   // advances the position of current node
         }
     }
-        return 0;
-    }
+}

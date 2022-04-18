@@ -13,15 +13,25 @@ char *t;
 sublist *current;
 char returnType;
 char *v;
-intable *li=(intable *)0;
+intable *li=NULL;
 
 init(char *name, char *type){
   li=putable(name,type,li);
 }
-checkinit(char *name,char *type){
-  
-  li=gettable(name,type,li);
-    
+checkinit(){
+  sublist *ptr;
+   displayTable();
+   
+  for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
+  {
+    printf(ptr->name);
+    printf("\n");
+    getable(&li,"s");
+
+  }
+  displayList(li);
+  current=0;
+  current = (sublist *)0;
   
 }
 
@@ -31,8 +41,7 @@ install ( char *sym_name,char *type )
    s = getsym (sym_name);
    if (s == 0){
         s = putsym (sym_name,type,current);
-        current=0;
-        current = (sublist *)0;
+        
    }
    else {
      
@@ -68,9 +77,7 @@ void checkReturnValid(char *name)
 }
 void checkEmpty()
 {
-  printf("hek   ");
-  printf(li->next->name);
-  printf("  no");
+  
   if(li!=0)
     errors++;
 }
@@ -124,7 +131,7 @@ progm:
   | proc progm
   | struct progm
 struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES {install($2,"null");  procedure = $2;}  
-proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;checkEmpty(); }
+proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;checkinit();}
 ;
 /*
 statement:stmt
@@ -136,15 +143,12 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_P
   | RETURN expr SEMICOL 
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
   | type ID SEMICOL    {installattributes($2,t);
-  intable *s;
-  s=gettable($2,t,li);
   
-  if(s!=0){
-    li=s;
-  }  
+    
+    //checkinit($2,t);
    }
   | lexp ASSIGN expr SEMICOL
-  | ID ASSIGN expr SEMICOL { init($1,v);}
+  | ID ASSIGN expr SEMICOL {init($1,v);}
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | ID ASSIGN ID OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | if_stmt
@@ -252,7 +256,7 @@ int main()
   int parse = yyparse();
   fclose(yyin);
  // display_table();
- displayTable();
+
  
  if(errors>0)
 {

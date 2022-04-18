@@ -1,8 +1,11 @@
 int a(){
+   
+
 
 string s;
-string f;
+string gh;
+s="abc";
 
-  s="";
-f="hello";
+
+ 
 }
