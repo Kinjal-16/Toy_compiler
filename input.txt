@@ -6,6 +6,4 @@ string s;
 string gh;
 s="abc";
 
-
- 
 }

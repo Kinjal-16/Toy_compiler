@@ -24,9 +24,11 @@ checkinit(){
    
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
+
     printf(ptr->name);
+
     printf("\n");
-    getable(&li,"s");
+    getable(&li,ptr->name);
 
   }
   displayList(li);
