@@ -53,28 +53,28 @@ return ID;}
             int x =  yycopy[yyleng-1]- '0';
             int y=  yycopy[0]- '0';
             if(y>3)
-                printf("Error \n");
+                printf("ERROR \n");
             else
             {
                 if(y==3)
                 { 
                     if(x>7)
-                        printf("Error \n");
+                        printf("ERROR \n");
                     else 
                         {
-                        printf("valid");
+                        
 
                         return NUM;}
                 }
                 else 
                     {
-                    printf("valid");
+                    
 
                     return NUM;}
             }
         }
         else 
-            printf("Error \n");
+            printf("ERROR \n");
     }
       }
 [a-zA-Z0-9_-][0-9a-zaA-Z_-]+ printf("ERROR");
@@ -83,7 +83,7 @@ return ID;}
 "="                    {return ASSIGN;}
 "=="                   {return EQUALS;}
 "!="                    {return NOT_EQUALS;}
-"<"                    {printf("valid");return LESS_THAN;}
+"<"                    {return LESS_THAN;}
 "<="                   {return LESS_THAN_EQUALS;}
 ">"                     {return GREATER_THAN;}
 ">="                   {return GREATER_THAN_EQUALS;}

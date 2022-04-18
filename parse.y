@@ -20,20 +20,20 @@ char *str="main";
 char *temp;
 char *rem;
 init(char *name, char *type){
-  printf("Here");
+ 
   li=putable(name,type,li,str);
   
 }
 checkinit(){
   sublist *ptr;
-   displayTable();
-   displayList(li);
+   
+   
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
     char *saumya=ptr->scope;
-    printf(ptr->name);
+    
 
-    printf("\n");
+    
     li=getable(li,ptr->name,ptr->type,saumya);
     if(li==NULL)
       break;
@@ -41,7 +41,7 @@ checkinit(){
   }
   if(li!=NULL)
     errors++;
-  displayList(li);
+  
   current=0;
   current = (sublist *)0;
   
@@ -103,13 +103,7 @@ void checkEmpty()
     errors++;
 }
 
-/*int context_check( char *sym_name )
-{ if ( get( sym_name,current ) == 0 )
-    {
-     printf( "%s is an undeclared identifier\n", sym_name );
-     errors++;
-    }
-}*/
+
 
   int yyerror(const char *msg);
   int yylex();
@@ -171,13 +165,12 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL  stmt CLOSING_
   strcat(temp,temp2);
   i++;
   str=temp;
-  printf(temp);
+  
 
 } zeroOrMoreStatements CLOSING_CURLY_BRACES  {
   temp=strremove(temp,rem);
   str=temp;
-  printf("\n");
-  printf(str);}
+  }
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
   | RETURN expr SEMICOL 
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
@@ -280,34 +273,31 @@ lexp: ID
 
 %%
 
-int main()
-{
+int main (int argc, char *argv[]){
 
-
-    FILE *fp;
-    fp = fopen("input.txt","r");
-    yyin = fp;
-
-  int parse = yyparse();
-  fclose(yyin);
- // display_table();
+    
  
+    // parsing
+    int flag;
+    yyin = fopen(argv[1], "r");
+    flag = yyparse();
+    fclose(yyin);
  
- if(errors>0)
-{
-	yyerror("Invalid");
-	}
-  if(parse == 0 )
-  {
-    printf("VALID\n");
-  }
+    
 
-  return 0;
+    
 
+    if(flag == 0){
+        printf("VALID");
+    }
+    else{
+        printf("ERROR");
+    }
 
+    return flag;
 }
 int yyerror(const char *msg){
-	fprintf(stderr, "%s\n", "Hey");
+	fprintf(stderr, "%s\n", "ERROR");
   exit(1);
 }
 
