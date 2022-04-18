@@ -10,12 +10,11 @@ struct intable
     struct intable *next;
 };
 
+typedef struct intable intable;
 
-typedef struct sublist intable;
+intable *table = (intable *)0;
 
-intable *intable = (intable *)0;
-
-symrec *putable(char *sym_name, char *type)
+intable *putable(char *sym_name, char *type, intable *list)
 {
     intable *ptr;
     ptr = (intable *)malloc(sizeof(intable));
@@ -23,17 +22,30 @@ symrec *putable(char *sym_name, char *type)
     strcpy(ptr->name, sym_name);
     ptr->type = (char *)malloc(strlen(type) + 1);
     strcpy(ptr->type, type);
-    ptr->next = (struct intable *)intable;
-    intable = ptr;
+    ptr->next = (struct intable *)list;
+    list = ptr;
     return ptr;
 }
-symrec *gettable(char *sym_name,char *type)
+intable *gettable(char *sym_name, char *type, intable *list)
 {
     intable *ptr;
-    for (ptr = intable; ptr != (intable *)0;
-         ptr = (intable *)ptr->next)
-        if (strcmp(ptr->name, sym_name) == 0 && strcmp(ptr->type,type)==0)
-            
-            return ptr;
-    return 0;
+    intable *pre;
+    for (ptr = list; ptr != (intable *)0; ptr = (intable *)ptr->next)
+    {
+        if (strcmp(ptr->name, sym_name) == 0)
+        {
+            if (strcmp(ptr->type, type) == 0)
+            {
+                pre->next = ptr->next;
+                free(ptr);
+                return list;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        pre = ptr;
+        return 0;
+    }
 }

@@ -13,14 +13,15 @@ char *t;
 sublist *current;
 char returnType;
 char *v;
-
+intable *head;
+head=(intable *)0;
 init(char *name, char *type){
-  intable *s;
-  puttable(name,type);
+  head=puttable(name,type,head);
 }
-check init(char *name,char *type){
-  intable *s;
-  sym
+checkinit(char *name,char *type){
+  
+  head=gettable(name,type,head);
+    
   
 }
 
@@ -65,7 +66,11 @@ void checkReturnValid(char *name)
     current=returnT(name,current);
   }
 }
-
+void checkEmpty()
+{
+  if(head!=0)
+    errors++;
+}
 int context_check( char *sym_name )
 { if ( get( sym_name,current ) == 0 )
     {
