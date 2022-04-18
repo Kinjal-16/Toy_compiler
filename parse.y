@@ -31,6 +31,8 @@ checkinit(){
     getable(&li,ptr->name);
 
   }
+  if(li!=NULL)
+    errors++;
   displayList(li);
   current=0;
   current = (sublist *)0;
