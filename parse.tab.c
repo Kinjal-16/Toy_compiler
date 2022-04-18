@@ -185,7 +185,7 @@ checkinit(){
     printf(ptr->name);
 
     printf("\n");
-    getable(&li,ptr->name);
+    li=getable(li,ptr->name);
 
   }
   if(li!=NULL)

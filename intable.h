@@ -26,17 +26,17 @@ intable *putable(char *sym_name, char *type, intable *list)
     list = ptr;
     return ptr;
 }
-void getable(intable **head_ref, char *key)
+intable *getable(intable *head_ref, char *key)
 {
     printf("stable here");
 
-    struct intable *temp = *head_ref, *prev;
+    struct intable *temp = head_ref, *prev;
 
     while (temp != NULL && strcmp(temp->name, key) == 0)
     {
-        *head_ref = temp->next;
+        head_ref = temp->next;
         free(temp);
-        temp = *head_ref;
+        temp = head_ref;
     }
 
     while (temp != NULL)
@@ -50,7 +50,7 @@ void getable(intable **head_ref, char *key)
 
         // If key was not present in linked list
         if (temp == NULL)
-            return;
+            return NULL;
 
         prev->next = temp->next;
 
@@ -59,6 +59,7 @@ void getable(intable **head_ref, char *key)
         // Update Temp for next iteration of outer loop
         temp = prev->next;
     }
+    return head_ref;
 }
 void displayList(intable *stnode)
 {
