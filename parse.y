@@ -13,14 +13,14 @@ char *t;
 sublist *current;
 char returnType;
 char *v;
-intable *head;
-head=(intable *)0;
+intable *li=(intable *)0;;
+
 init(char *name, char *type){
-  head=puttable(name,type,head);
+  li=putable(name,type,li);
 }
 checkinit(char *name,char *type){
   
-  head=gettable(name,type,head);
+  li=gettable(name,type,li);
     
   
 }
@@ -68,21 +68,20 @@ void checkReturnValid(char *name)
 }
 void checkEmpty()
 {
-  if(head!=0)
+  printf("hek   ");
+  printf(li->next->name);
+  printf("  no");
+  if(li!=0)
     errors++;
 }
-int context_check( char *sym_name )
+
+/*int context_check( char *sym_name )
 { if ( get( sym_name,current ) == 0 )
     {
      printf( "%s is an undeclared identifier\n", sym_name );
      errors++;
-  
     }
-    else
-    {
-      printf("cool"); 
-    } 
-}
+}*/
 
   int yyerror(const char *msg);
   int yylex();
@@ -118,23 +117,6 @@ int context_check( char *sym_name )
  
 %%
 
-/*prog: proc progm
-  | struct progm
-
-//progm:
-  | proc progm
-  | struct progm
-;
-
-proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreDeclarations CLOSING_CURLY_BRACES
-;
-
-struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES     
-;
-
-
-
-*/
 
 prog: proc progm
   | struct progm
@@ -142,7 +124,7 @@ progm:
   | proc progm
   | struct progm
 struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES {install($2,"null");  procedure = $2;}  
-proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;}
+proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;checkEmpty(); }
 ;
 /*
 statement:stmt
@@ -153,9 +135,16 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_P
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
   | RETURN expr SEMICOL 
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
-  | type ID SEMICOL    { installattributes($2,t);   }
+  | type ID SEMICOL    {installattributes($2,t);
+  intable *s;
+  s=gettable($2,t,li);
+  
+  if(s!=0){
+    li=s;
+  }  
+   }
   | lexp ASSIGN expr SEMICOL
-  | ID ASSIGN expr SEMICOL {printf(t); printf(v); context_check($1);}
+  | ID ASSIGN expr SEMICOL { init($1,v);}
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | ID ASSIGN ID OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | if_stmt
@@ -165,8 +154,8 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_P
 if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
   | IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES ELSE OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
 ;
-expr : NUM {v=" int "}
-| STR
+expr : NUM {v="int"}
+| STR     {v="string";}
 |TRUE   {v="bool";}
 |FALSE   {v="bool";} 
 |expr op expr
@@ -182,11 +171,11 @@ exprs:
 return_type: INT {t = $1;
 };
   |BOOL{t = $1;
-printf(t);};
+};
   |STRING {t = $1;
-printf(t);};
+};
   |VOID  {t = $1;
-printf(t);};
+};
 type: INT {t = $1;}
   |BOOL {t = $1;}
   |STRING
@@ -264,6 +253,7 @@ int main()
   fclose(yyin);
  // display_table();
  displayTable();
+ 
  if(errors>0)
 {
 	yyerror("Invalid");

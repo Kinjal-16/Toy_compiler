@@ -1,6 +1,8 @@
 int a(){
-  bool s;
-  bool s;
-  b=false;
-  
+
+string s;
+string f;
+
+  s="";
+f="hello";
 }
