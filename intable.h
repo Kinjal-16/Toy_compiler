@@ -30,22 +30,39 @@ intable *gettable(char *sym_name, char *type, intable *list)
 {
     intable *ptr;
     intable *pre;
+    int i = 0;
     for (ptr = list; ptr != (intable *)0; ptr = (intable *)ptr->next)
     {
-        if (strcmp(ptr->name, sym_name) == 0)
+        i++;
+        if (i > 1)
         {
-            if (strcmp(ptr->type, type) == 0)
+            if (strcmp(ptr->name, sym_name) == 0)
             {
-                pre->next = ptr->next;
-                free(ptr);
-                return list;
-            }
-            else
-            {
-                return 0;
+                if (strcmp(ptr->type, type) == 0)
+                {
+                    pre->next = ptr->next;
+                    free(ptr);
+                    return list;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
-        pre = ptr;
+        else
+        {
+            if (strcmp(ptr->name, sym_name) == 0)
+            {
+                if (strcmp(ptr->type, type) == 0)
+                {
+
+                    list = ptr->next;
+                    free(ptr);
+                }
+            }
+
+            pre = ptr;
+        }
         return 0;
     }
-}
