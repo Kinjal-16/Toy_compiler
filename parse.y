@@ -21,19 +21,20 @@ char *temp;
 char *rem;
 init(char *name, char *type){
   printf("Here");
-  li=putable(name,type,li);
+  li=putable(name,type,li,str);
+  
 }
 checkinit(){
   sublist *ptr;
    displayTable();
-   
+   displayList(li);
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
-    
+    char *saumya=ptr->scope;
     printf(ptr->name);
 
     printf("\n");
-    li=getable(li,ptr->name,ptr->type);
+    li=getable(li,ptr->name,ptr->type,saumya);
     if(li==NULL)
       break;
 
@@ -290,7 +291,7 @@ int main()
   int parse = yyparse();
   fclose(yyin);
  // display_table();
-
+ 
  
  if(errors>0)
 {

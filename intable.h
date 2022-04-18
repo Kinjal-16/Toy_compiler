@@ -14,25 +14,27 @@ typedef struct intable intable;
 
 intable *table = (intable *)0;
 
-intable *putable(char *sym_name, char *type, intable *list)
+intable *putable(char *sym_name, char *type, intable *list, char *scope)
 {
     intable *ptr;
     ptr = (intable *)malloc(sizeof(intable));
     ptr->name = (char *)malloc(strlen(sym_name) + 1);
+    ptr->scope = (char *)malloc(strlen(scope) + 1);
     // ptr->scope = scope;
     strcpy(ptr->name, sym_name);
+    strcpy(ptr->scope, scope);
     ptr->type = (char *)malloc(strlen(type) + 1);
     strcpy(ptr->type, type);
     ptr->next = (struct intable *)list;
     list = ptr;
     return ptr;
 }
-intable *getable(intable *head_ref, char *key, char *type)
+intable *getable(intable *head_ref, char *key, char *type, char *scope)
 {
 
     struct intable *temp = head_ref, *prev;
 
-    while (temp != NULL && strcmp(temp->name, key) == 0)
+    while (temp != NULL && strcmp(temp->name, key) == 0 && strstr(temp->scope, scope))
     {
         if (strcmp(temp->type, type) != 0)
             return head_ref;
@@ -55,7 +57,10 @@ intable *getable(intable *head_ref, char *key, char *type)
         // If key was not present in linked list
         if (temp == NULL)
             return head_ref;
-
+        if (!strstr(temp->scope, scope))
+        {
+            return head_ref;
+        }
         if (strcmp(temp->type, type) != 0)
         {
 
@@ -82,8 +87,8 @@ void displayList(intable *stnode)
         tmp = stnode;
         while (tmp != NULL)
         {
-            printf(" Data = %s\n", tmp->name); // prints the data of current node
-            tmp = tmp->next;                   // advances the position of current node
+            printf(" Data = %s\n", tmp->scope); // prints the data of current node
+            tmp = tmp->next;                    // advances the position of current node
         }
     }
 }

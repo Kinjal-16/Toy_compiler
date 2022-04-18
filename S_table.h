@@ -6,7 +6,7 @@ struct sublist
 {
     char *name;
     char *type;
-    int scope;
+    char *scope;
     struct sublist *next;
 };
 
