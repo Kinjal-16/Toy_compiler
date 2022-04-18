@@ -6,7 +6,7 @@ struct sublist
 {
     char *name;
     char *type;
-
+    int scope;
     struct sublist *next;
 };
 
@@ -63,12 +63,13 @@ sublist *getlist(char *sym_name)
     return 0;
 }
 
-sublist *put(char *sym, char *otype, sublist *head)
+sublist *put(char *sym, char *otype, sublist *head, int scope)
 {
     sublist *ptr;
     ptr = (sublist *)malloc(sizeof(sublist));
     ptr->name = (char *)malloc(strlen(sym) + 1);
     ptr->type = (char *)malloc(strlen(otype) + 1);
+    ptr->scope = scope;
     strcpy(ptr->name, sym);
     strcpy(ptr->type, otype);
     ptr->next = (struct sublist *)head;

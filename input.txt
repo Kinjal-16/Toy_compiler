@@ -1,11 +1,14 @@
-int a(){
-   
+int an(){
 
+int a;
+a=0;
 
-
-bool s;
-string str;
-s="Hey";
-str="hey";
+int f;
+for(b=5;b<4;b=b+1;){ 
+  int b;
+  int e;
+  e=5;
+  b=7;
+}
 
 }

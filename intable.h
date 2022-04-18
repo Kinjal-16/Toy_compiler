@@ -6,7 +6,7 @@ struct intable
 {
     char *name;
     char *type;
-
+    int scope;
     struct intable *next;
 };
 
@@ -14,11 +14,12 @@ typedef struct intable intable;
 
 intable *table = (intable *)0;
 
-intable *putable(char *sym_name, char *type, intable *list)
+intable *putable(char *sym_name, char *type, intable *list, int scope)
 {
     intable *ptr;
     ptr = (intable *)malloc(sizeof(intable));
     ptr->name = (char *)malloc(strlen(sym_name) + 1);
+    ptr->scope = scope;
     strcpy(ptr->name, sym_name);
     ptr->type = (char *)malloc(strlen(type) + 1);
     strcpy(ptr->type, type);
@@ -54,8 +55,12 @@ intable *getable(intable *head_ref, char *key, char *type)
         // If key was not present in linked list
         if (temp == NULL)
             return head_ref;
+
         if (strcmp(temp->type, type) != 0)
+        {
+
             return head_ref;
+        }
         prev->next = temp->next;
 
         free(temp); // Free memory
@@ -70,7 +75,7 @@ void displayList(intable *stnode)
     struct intable *tmp;
     if (stnode == NULL)
     {
-        printf(" List is empty.");
+        printf(" List Empty");
     }
     else
     {

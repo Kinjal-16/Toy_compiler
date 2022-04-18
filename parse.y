@@ -14,8 +14,9 @@ sublist *current;
 char returnType;
 char *v;
 intable *li=NULL;
-
+int scope=0;
 init(char *name, char *type){
+  printf("Here");
   li=putable(name,type,li);
 }
 checkinit(){
@@ -24,11 +25,11 @@ checkinit(){
    
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
-
+    
     printf(ptr->name);
 
     printf("\n");
-    li=getable(li,ptr->name,ptr->type);
+    li=getable(li,ptr->name,ptr->type,ptr->scope);
     if(li==NULL)
       break;
 
@@ -65,7 +66,7 @@ installattributes(char *sym_name,char *type){
   }
   else 
   {
-    current=put(sym_name,type,current);
+    current=put(sym_name,type,current,scope);
   }
   
 }
@@ -144,15 +145,11 @@ statement:stmt
 	| prog
 ;*/
 
-stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_PARENTHESIS  OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
+stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL  stmt CLOSING_PARENTHESIS  OPENING_CURLY_BRACES {scope++;} zeroOrMoreStatements CLOSING_CURLY_BRACES  {scope--;}
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
   | RETURN expr SEMICOL 
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
-  | type ID SEMICOL    {installattributes($2,t);
-  
-    
-    //checkinit($2,t);
-   }
+  | type ID SEMICOL    {installattributes($2,t);}
   | lexp ASSIGN expr SEMICOL
   | ID ASSIGN expr SEMICOL {init($1,v);}
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
@@ -161,8 +158,8 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_P
 
 ;
 
-if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
-  | IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES ELSE OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
+if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES
+  | IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES ELSE OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES
 ;
 expr : NUM {v="int"}
 | STR     {v="string";}
@@ -278,7 +275,7 @@ int main()
 
 }
 int yyerror(const char *msg){
-	fprintf(stderr, "%s\n", "ERROR");
+	fprintf(stderr, "%s\n", "Hey");
   exit(1);
 }
 
