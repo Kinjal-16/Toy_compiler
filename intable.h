@@ -42,7 +42,7 @@ intable *getable(intable *head_ref, char *key)
     while (temp != NULL)
     {
 
-        while (temp != NULL && strcmp(temp->name, key) == 0)
+        while (temp != NULL && strcmp(temp->name, key) != 0)
         {
             prev = temp;
             temp = temp->next;

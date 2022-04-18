@@ -2,8 +2,8 @@ int a(){
    
 
 
+
 string s;
-string gh;
-s="abc";
+gh="abc";
 
 }
