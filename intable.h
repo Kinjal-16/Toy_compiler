@@ -64,5 +64,6 @@ intable *gettable(char *sym_name, char *type, intable *list)
 
             pre = ptr;
         }
+    }
         return 0;
     }

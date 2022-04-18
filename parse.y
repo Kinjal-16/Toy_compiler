@@ -13,7 +13,7 @@ char *t;
 sublist *current;
 char returnType;
 char *v;
-intable *li=(intable *)0;;
+intable *li=(intable *)0;
 
 init(char *name, char *type){
   li=putable(name,type,li);
