@@ -22,7 +22,7 @@ int                     {
   
     return INT;}
 true                    {return TRUE;}
-false                   {return FALSE;}
+false                  {return FALSE;}
 void                    {return VOID;}
 printf                  {return PRINTF;}
 string                  {yylval.id = (char *) strdup(yytext); 

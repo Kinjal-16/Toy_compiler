@@ -4,6 +4,7 @@
 
  #include <stdlib.h>
  #include "S_table.h"
+ #include "intable.h"
  extern FILE *yyin;
  extern int yylex();
 int errors=0;
@@ -11,6 +12,19 @@ char *procedure;
 char *t;
 sublist *current;
 char returnType;
+char *v;
+
+init(char *name, char *type){
+  intable *s;
+  puttable(name,type);
+}
+check init(char *name,char *type){
+  intable *s;
+  sym
+  
+}
+
+
 install ( char *sym_name,char *type )
 {  symrec *s;
    s = getsym (sym_name);
@@ -28,7 +42,7 @@ install ( char *sym_name,char *type )
 installattributes(char *sym_name,char *type){
   
  
-  if(get(sym_name,type,current)==0)
+  if(get(sym_name,current)==0)
   {
     errors++;
     
@@ -53,8 +67,16 @@ void checkReturnValid(char *name)
 }
 
 int context_check( char *sym_name )
-{ if ( getsym( sym_name ) == 0 )
+{ if ( get( sym_name,current ) == 0 )
+    {
      printf( "%s is an undeclared identifier\n", sym_name );
+     errors++;
+  
+    }
+    else
+    {
+      printf("cool"); 
+    } 
 }
 
   int yyerror(const char *msg);
@@ -128,7 +150,7 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_P
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
   | type ID SEMICOL    { installattributes($2,t);   }
   | lexp ASSIGN expr SEMICOL
-  | ID ASSIGN expr SEMICOL
+  | ID ASSIGN expr SEMICOL {printf(t); printf(v); context_check($1);}
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | ID ASSIGN ID OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | if_stmt
@@ -138,10 +160,10 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL stmt CLOSING_P
 if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
   | IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES ELSE OPENING_CURLY_BRACES stmt CLOSING_CURLY_BRACES
 ;
-expr : NUM 
+expr : NUM {v=" int "}
 | STR
-|TRUE
-|FALSE{}
+|TRUE   {v="bool";}
+|FALSE   {v="bool";} 
 |expr op expr
 |MINUS expr %prec UMINUS
 |NOT expr

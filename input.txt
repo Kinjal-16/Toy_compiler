@@ -1,18 +1,6 @@
-int abc(){
-   int a;
-   int abc;
-   
-}
-int ac(){
-   int a;
-   int abc;
-   
-}
-int ak(){
-   int a;
-   int abc;
-}
-struct l{
-   int a,
-   int abc
+int a(){
+  bool s;
+  bool s;
+  b=false;
+  
 }

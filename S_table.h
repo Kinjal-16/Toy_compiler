@@ -75,7 +75,7 @@ sublist *put(char *sym, char *otype, sublist *head)
     head = ptr;
     return ptr;
 }
-int *get(char *sym, char *otype, sublist *head)
+int *get(char *sym, sublist *head)
 {
     sublist *ptr;
     for (ptr = head; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
@@ -89,6 +89,8 @@ int *get(char *sym, char *otype, sublist *head)
 
     return 1;
 }
+
+
 void displayTable()
 {
     symrec *ptr;
