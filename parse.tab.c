@@ -185,7 +185,9 @@ checkinit(){
     printf(ptr->name);
 
     printf("\n");
-    li=getable(li,ptr->name);
+    li=getable(li,ptr->name,ptr->type);
+    if(li==NULL)
+      break;
 
   }
   if(li!=NULL)
@@ -277,14 +279,14 @@ void checkEmpty()
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 103 "parse.y"
+#line 105 "parse.y"
 { 
   char *id;
   int a;
   char *string;
 }
 /* Line 193 of yacc.c.  */
-#line 288 "parse.tab.c"
+#line 290 "parse.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -297,7 +299,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 301 "parse.tab.c"
+#line 303 "parse.tab.c"
 
 #ifdef short
 # undef short
@@ -609,13 +611,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   132,   132,   133,   134,   135,   136,   137,   138,   145,
-     146,   147,   148,   149,   154,   155,   156,   157,   158,   162,
-     163,   165,   166,   167,   168,   169,   170,   171,   172,   173,
-     176,   177,   179,   181,   183,   185,   187,   188,   189,   192,
-     193,   194,   196,   197,   199,   200,   201,   203,   209,   209,
-     209,   209,   209,   209,   209,   209,   209,   209,   209,   209,
-     209,   210,   211,   245,   246
+       0,   134,   134,   135,   136,   137,   138,   139,   140,   147,
+     148,   149,   150,   151,   156,   157,   158,   159,   160,   164,
+     165,   167,   168,   169,   170,   171,   172,   173,   174,   175,
+     178,   179,   181,   183,   185,   187,   189,   190,   191,   194,
+     195,   196,   198,   199,   201,   202,   203,   205,   211,   211,
+     211,   211,   211,   211,   211,   211,   211,   211,   211,   211,
+     211,   212,   213,   247,   248
 };
 #endif
 
@@ -1642,17 +1644,17 @@ yyreduce:
   switch (yyn)
     {
         case 7:
-#line 137 "parse.y"
+#line 139 "parse.y"
     {install((yyvsp[(2) - (5)].string),"null");  procedure = (yyvsp[(2) - (5)].string);;}
     break;
 
   case 8:
-#line 138 "parse.y"
+#line 140 "parse.y"
     {install((yyvsp[(2) - (8)].string),t);procedure = (yyvsp[(2) - (8)].string);checkinit();;}
     break;
 
   case 13:
-#line 149 "parse.y"
+#line 151 "parse.y"
     {installattributes((yyvsp[(2) - (3)].string),t);
   
     
@@ -1661,77 +1663,77 @@ yyreduce:
     break;
 
   case 15:
-#line 155 "parse.y"
+#line 157 "parse.y"
     {init((yyvsp[(1) - (4)].string),v);;}
     break;
 
   case 21:
-#line 165 "parse.y"
+#line 167 "parse.y"
     {v="int";}
     break;
 
   case 22:
-#line 166 "parse.y"
+#line 168 "parse.y"
     {v="string";;}
     break;
 
   case 23:
-#line 167 "parse.y"
+#line 169 "parse.y"
     {v="bool";;}
     break;
 
   case 24:
-#line 168 "parse.y"
+#line 170 "parse.y"
     {v="bool";;}
     break;
 
   case 32:
-#line 179 "parse.y"
-    {t = (yyvsp[(1) - (1)].string);
-;}
-    break;
-
-  case 33:
 #line 181 "parse.y"
     {t = (yyvsp[(1) - (1)].string);
 ;}
     break;
 
-  case 34:
+  case 33:
 #line 183 "parse.y"
     {t = (yyvsp[(1) - (1)].string);
 ;}
     break;
 
-  case 35:
+  case 34:
 #line 185 "parse.y"
     {t = (yyvsp[(1) - (1)].string);
 ;}
     break;
 
-  case 36:
+  case 35:
 #line 187 "parse.y"
+    {t = (yyvsp[(1) - (1)].string);
+;}
+    break;
+
+  case 36:
+#line 189 "parse.y"
     {t = (yyvsp[(1) - (1)].string);;}
     break;
 
   case 37:
-#line 188 "parse.y"
-    {t = (yyvsp[(1) - (1)].string);;}
-    break;
-
-  case 38:
 #line 190 "parse.y"
     {t = (yyvsp[(1) - (1)].string);;}
     break;
 
+  case 38:
+#line 192 "parse.y"
+    {t = (yyvsp[(1) - (1)].string);;}
+    break;
+
   case 47:
-#line 203 "parse.y"
+#line 205 "parse.y"
     { installattributes((yyvsp[(2) - (2)].string),t);   ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1735 "parse.tab.c"
+#line 1737 "parse.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1945,7 +1947,7 @@ yyreturn:
 }
 
 
-#line 250 "parse.y"
+#line 252 "parse.y"
 
 
 int main()

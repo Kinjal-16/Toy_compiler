@@ -3,7 +3,9 @@ int a(){
 
 
 
-string s;
-gh="abc";
+bool s;
+string str;
+s="Hey";
+str="hey";
 
 }

@@ -26,14 +26,16 @@ intable *putable(char *sym_name, char *type, intable *list)
     list = ptr;
     return ptr;
 }
-intable *getable(intable *head_ref, char *key)
+intable *getable(intable *head_ref, char *key, char *type)
 {
-    printf("stable here");
 
     struct intable *temp = head_ref, *prev;
 
     while (temp != NULL && strcmp(temp->name, key) == 0)
     {
+        if (strcmp(temp->type, type) != 0)
+            return head_ref;
+
         head_ref = temp->next;
         free(temp);
         temp = head_ref;
@@ -44,14 +46,16 @@ intable *getable(intable *head_ref, char *key)
 
         while (temp != NULL && strcmp(temp->name, key) != 0)
         {
+
             prev = temp;
             temp = temp->next;
         }
 
         // If key was not present in linked list
         if (temp == NULL)
-            return NULL;
-
+            return head_ref;
+        if (strcmp(temp->type, type) != 0)
+            return head_ref;
         prev->next = temp->next;
 
         free(temp); // Free memory

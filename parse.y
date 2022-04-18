@@ -28,7 +28,9 @@ checkinit(){
     printf(ptr->name);
 
     printf("\n");
-    li=getable(li,ptr->name);
+    li=getable(li,ptr->name,ptr->type);
+    if(li==NULL)
+      break;
 
   }
   if(li!=NULL)
