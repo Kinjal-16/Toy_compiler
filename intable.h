@@ -6,7 +6,7 @@ struct intable
 {
     char *name;
     char *type;
-    int scope;
+    char *scope;
     struct intable *next;
 };
 
@@ -14,12 +14,12 @@ typedef struct intable intable;
 
 intable *table = (intable *)0;
 
-intable *putable(char *sym_name, char *type, intable *list, int scope)
+intable *putable(char *sym_name, char *type, intable *list)
 {
     intable *ptr;
     ptr = (intable *)malloc(sizeof(intable));
     ptr->name = (char *)malloc(strlen(sym_name) + 1);
-    ptr->scope = scope;
+    // ptr->scope = scope;
     strcpy(ptr->name, sym_name);
     ptr->type = (char *)malloc(strlen(type) + 1);
     strcpy(ptr->type, type);

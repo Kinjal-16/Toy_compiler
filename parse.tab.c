@@ -171,7 +171,11 @@ sublist *current;
 char returnType;
 char *v;
 intable *li=NULL;
-
+int i=0;
+int j=0;
+char *str="main";
+char *temp;
+char *rem;
 init(char *name, char *type){
   printf("Here");
   li=putable(name,type,li);
@@ -182,7 +186,7 @@ checkinit(){
    
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
-
+    
     printf(ptr->name);
 
     printf("\n");
@@ -199,7 +203,16 @@ checkinit(){
   
 }
 
-
+char *strremove(char *str, const char *sub) {
+    size_t len = strlen(sub);
+    if (len > 0) {
+        char *p = str;
+        while ((p = strstr(p, sub)) != NULL) {
+            memmove(p, p + len, strlen(p + len) + 1);
+        }
+    }
+    return str;
+}
 install ( char *sym_name,char *type )
 {  symrec *s;
    s = getsym (sym_name);
@@ -223,7 +236,7 @@ installattributes(char *sym_name,char *type){
   }
   else 
   {
-    current=put(sym_name,type,current);
+    current=put(sym_name,type,current,str);
   }
   
 }
@@ -280,14 +293,14 @@ void checkEmpty()
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 106 "parse.y"
+#line 119 "parse.y"
 { 
   char *id;
   int a;
   char *string;
 }
 /* Line 193 of yacc.c.  */
-#line 291 "parse.tab.c"
+#line 304 "parse.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -300,7 +313,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 304 "parse.tab.c"
+#line 317 "parse.tab.c"
 
 #ifdef short
 # undef short
@@ -610,15 +623,15 @@ static const yytype_int8 yyrhs[] =
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
-       0,   135,   135,   136,   137,   138,   139,   140,   141,   148,
-     148,   149,   150,   151,   152,   153,   154,   155,   156,   157,
-     161,   162,   164,   165,   166,   167,   168,   169,   170,   171,
-     172,   175,   176,   178,   180,   182,   184,   186,   187,   188,
-     191,   192,   193,   195,   196,   198,   199,   200,   202,   208,
-     208,   208,   208,   208,   208,   208,   208,   208,   208,   208,
-     208,   208,   209,   210,   244,   245
+       0,   148,   148,   149,   150,   151,   152,   153,   154,   161,
+     161,   180,   181,   182,   183,   184,   185,   186,   187,   188,
+     192,   193,   195,   196,   197,   198,   199,   200,   201,   202,
+     203,   206,   207,   209,   211,   213,   215,   217,   218,   219,
+     222,   223,   224,   226,   227,   229,   230,   231,   233,   239,
+     239,   239,   239,   239,   239,   239,   239,   239,   239,   239,
+     239,   239,   240,   241,   275,   276
 };
 #endif
 
@@ -1645,97 +1658,120 @@ yyreduce:
   switch (yyn)
     {
         case 7:
-#line 140 "parse.y"
+#line 153 "parse.y"
     {install((yyvsp[(2) - (5)].string),"null");  procedure = (yyvsp[(2) - (5)].string);;}
     break;
 
   case 8:
-#line 141 "parse.y"
+#line 154 "parse.y"
     {install((yyvsp[(2) - (8)].string),t);procedure = (yyvsp[(2) - (8)].string);checkinit();;}
     break;
 
   case 9:
-#line 148 "parse.y"
-    {displayList(li); printf("\nBla ");;}
+#line 161 "parse.y"
+    {
+  temp = (char *)malloc(strlen(str)+4);
+  rem=(char *)malloc(20);
+  char *temp2 =(char *)malloc(20);
+  strcat(temp,str);
+  strcat(temp,"for");
+  sprintf(temp2, "%d", i);
+  strcat(rem,"for");
+  strcat(rem, temp2);
+  strcat(temp,temp2);
+  i++;
+  str=temp;
+  printf(temp);
+
+;}
+    break;
+
+  case 10:
+#line 175 "parse.y"
+    {
+  temp=strremove(temp,rem);
+  str=temp;
+  printf("\n");
+  printf(str);;}
     break;
 
   case 14:
-#line 152 "parse.y"
+#line 183 "parse.y"
     {installattributes((yyvsp[(2) - (3)].string),t);;}
     break;
 
   case 16:
-#line 154 "parse.y"
+#line 185 "parse.y"
     {init((yyvsp[(1) - (4)].string),v);;}
     break;
 
   case 22:
-#line 164 "parse.y"
+#line 195 "parse.y"
     {v="int";}
     break;
 
   case 23:
-#line 165 "parse.y"
+#line 196 "parse.y"
     {v="string";;}
     break;
 
   case 24:
-#line 166 "parse.y"
+#line 197 "parse.y"
     {v="bool";;}
     break;
 
   case 25:
-#line 167 "parse.y"
+#line 198 "parse.y"
     {v="bool";;}
     break;
 
   case 33:
-#line 178 "parse.y"
+#line 209 "parse.y"
     {t = (yyvsp[(1) - (1)].string);
 ;}
     break;
 
   case 34:
-#line 180 "parse.y"
+#line 211 "parse.y"
     {t = (yyvsp[(1) - (1)].string);
 ;}
     break;
 
   case 35:
-#line 182 "parse.y"
+#line 213 "parse.y"
     {t = (yyvsp[(1) - (1)].string);
 ;}
     break;
 
   case 36:
-#line 184 "parse.y"
+#line 215 "parse.y"
     {t = (yyvsp[(1) - (1)].string);
 ;}
     break;
 
   case 37:
-#line 186 "parse.y"
+#line 217 "parse.y"
     {t = (yyvsp[(1) - (1)].string);;}
     break;
 
   case 38:
-#line 187 "parse.y"
+#line 218 "parse.y"
     {t = (yyvsp[(1) - (1)].string);;}
     break;
 
   case 39:
-#line 189 "parse.y"
+#line 220 "parse.y"
     {t = (yyvsp[(1) - (1)].string);;}
     break;
 
   case 48:
-#line 202 "parse.y"
+#line 233 "parse.y"
     { installattributes((yyvsp[(2) - (2)].string),t);   ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1739 "parse.tab.c"
+#line 1775 "parse.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1949,7 +1985,7 @@ yyreturn:
 }
 
 
-#line 249 "parse.y"
+#line 280 "parse.y"
 
 
 int main()

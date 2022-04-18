@@ -63,15 +63,19 @@ sublist *getlist(char *sym_name)
     return 0;
 }
 
-sublist *put(char *sym, char *otype, sublist *head, int scope)
+sublist *put(char *sym, char *otype, sublist *head, char *scope)
 {
     sublist *ptr;
     ptr = (sublist *)malloc(sizeof(sublist));
     ptr->name = (char *)malloc(strlen(sym) + 1);
     ptr->type = (char *)malloc(strlen(otype) + 1);
-    ptr->scope = scope;
+
+    ptr->scope = (char *)malloc(strlen(scope) + 1);
+
+    // ptr->scope = scope;
     strcpy(ptr->name, sym);
     strcpy(ptr->type, otype);
+    strcpy(ptr->scope, scope);
     ptr->next = (struct sublist *)head;
     head = ptr;
     return ptr;
@@ -101,7 +105,7 @@ void displayTable()
         printf(":   ");
         for (j = ptr->attributes; j != (sublist *)0; j = (sublist *)j->next)
         {
-            printf(j->name);
+            printf(j->scope);
             printf("-->");
         }
         printf("null");

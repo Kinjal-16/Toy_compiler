@@ -14,7 +14,11 @@ sublist *current;
 char returnType;
 char *v;
 intable *li=NULL;
-int scope=0;
+int i=0;
+int j=0;
+char *str="main";
+char *temp;
+char *rem;
 init(char *name, char *type){
   printf("Here");
   li=putable(name,type,li);
@@ -29,7 +33,7 @@ checkinit(){
     printf(ptr->name);
 
     printf("\n");
-    li=getable(li,ptr->name,ptr->type,ptr->scope);
+    li=getable(li,ptr->name,ptr->type);
     if(li==NULL)
       break;
 
@@ -42,7 +46,16 @@ checkinit(){
   
 }
 
-
+char *strremove(char *str, const char *sub) {
+    size_t len = strlen(sub);
+    if (len > 0) {
+        char *p = str;
+        while ((p = strstr(p, sub)) != NULL) {
+            memmove(p, p + len, strlen(p + len) + 1);
+        }
+    }
+    return str;
+}
 install ( char *sym_name,char *type )
 {  symrec *s;
    s = getsym (sym_name);
@@ -66,7 +79,7 @@ installattributes(char *sym_name,char *type){
   }
   else 
   {
-    current=put(sym_name,type,current,scope);
+    current=put(sym_name,type,current,str);
   }
   
 }
@@ -145,7 +158,25 @@ statement:stmt
 	| prog
 ;*/
 
-stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL  stmt CLOSING_PARENTHESIS  OPENING_CURLY_BRACES {scope++;} zeroOrMoreStatements CLOSING_CURLY_BRACES  {scope--;}
+stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL  stmt CLOSING_PARENTHESIS  OPENING_CURLY_BRACES {
+  temp = (char *)malloc(strlen(str)+4);
+  rem=(char *)malloc(20);
+  char *temp2 =(char *)malloc(20);
+  strcat(temp,str);
+  strcat(temp,"for");
+  sprintf(temp2, "%d", i);
+  strcat(rem,"for");
+  strcat(rem, temp2);
+  strcat(temp,temp2);
+  i++;
+  str=temp;
+  printf(temp);
+
+} zeroOrMoreStatements CLOSING_CURLY_BRACES  {
+  temp=strremove(temp,rem);
+  str=temp;
+  printf("\n");
+  printf(str);}
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
   | RETURN expr SEMICOL 
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
