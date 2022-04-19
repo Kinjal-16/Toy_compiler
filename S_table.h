@@ -118,7 +118,7 @@ void displayTable()
         printf(":   ");
         for (j = ptr->attributes; j != (sublist *)0; j = (sublist *)j->next)
         {
-            printf(j->scope);
+            printf(j->name);
             printf("-->");
         }
         printf("null");

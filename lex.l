@@ -98,11 +98,11 @@ return ID;}
 "*"                     {return MULTIPLY;}
 "/"                     {return DIVIDE;}
 
-\"(\\([abfnrtv][^'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*\"   { /* Valid string */ } {printf("Ok String \n");return STR;}
+\"(\\([abfnrtv][^'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*\"   { /* Valid string */ } {return STR;}
 \"(\\([abfnrtv'"?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])/\\  { /* ERROR escape sequence */ } printf("ERROR ");yyterminate();
 \"(\\([abfnrtv'?\n]|[0-7]{1,3}|x[[:xdigit:]]+|u[[:xdigit:]]{4}|U[[:xdigit:]]{8})|[^\\"\n])*   { /* Missing terminating quote */ }  printf("ERROR ");yyterminate();
 
-.                      printf("ERROR ");yyterminate(); 
+.                      printf("ERROR");yyterminate(); 
 
 %%
 int yywrap() {}

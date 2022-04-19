@@ -1,14 +1,40 @@
-int an(){
-
-
-bool b;
-b=false;
-
-if(b==true) then
-{
-
+struct Name {
+	// this is a set of declarations
+	string first_name,
+	string last_name,
+	int id,
+	int supervisorID,
+	bool isManager
+}
+struct Employee {
+	Name name
+}
+struct Dept {
+	Employee head
 }
 
-int k;
-return 0;
+void main() { 
+	// this is a procedure
+	bool b;
+	string y;
+	b = true;
+	y = "Hello World";
+	f();
+	int aNum;
+}
+
+int f() {
+	// scoping works!
+	int y;
+	y = 15;
+
+	
+	
+	Name aName;
+	aName.first_name = "Jordan";
+	aName.last_name = "Michael";
+	aName.id = 1234;
+	aName.isManager = true;
+	// change any of the above types = error!
+	return 5;
 }

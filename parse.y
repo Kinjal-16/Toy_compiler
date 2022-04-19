@@ -30,8 +30,7 @@ init(char *name, char *type){
 }
 checkinit(){
   sublist *ptr;
-   displayTable();
-   displayList(li);
+   
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
     char *saumya=ptr->scope;
@@ -176,7 +175,7 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSIN
   str=temp;
   }
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
-  | RETURN expr SEMICOL {printf("Return");memset(ar, 0, 1000);point=0}
+  | RETURN expr SEMICOL {memset(ar, 0, 1000);point=0;}
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
   | type ID SEMICOL    {installattributes($2,t);}
   | lexp ASSIGN expr SEMICOL {memset(ar, 0, 1000);point=0;}
@@ -214,22 +213,7 @@ expr :STR     {v="string";
     ar[point]=v;
     point++;
   } 
-|expr op expr {
-
-  char *z=ar[0];
-  for(int i=0;i<point;i++)
-  {
-    if(strcmp(z,ar[i])!=0)
-    {
-      errors++;
-      break;
-    }
-  }
-  memset(ar, 0, 1000);point=0;
-
-
-
-}
+|expr op expr 
 |MINUS expr %prec UMINUS {memset(ar, 0, 1000);point=0;}
 |NOT expr  {memset(ar, 0, 1000);point=0;}
 |lexp
@@ -239,8 +223,8 @@ expr :STR     {v="string";
 
 
 boolop:exprtt bools exprtt{
-
-  char *z=ar[0];
+  
+    char *z=ar[0];
   for(int i=0;i<point;i++)
   {
     if(strcmp(z,ar[i])!=0)
@@ -302,6 +286,8 @@ type: INT {t = $1;}
   |BOOL {t = $1;}
   |STRING
 {t = $1;}
+  |ID 
+  {t=$1;}
  ;
 zeroOrMoreDeclarations:
    | declaration
@@ -378,8 +364,22 @@ blexp: ID {
   }
 }
 ;
-lexp: ID 
-  | ID FULLSTOP lexp
+lexp: ID
+| ID FULLSTOP ID
+{
+  
+  if(get($1,current)==1)
+  {
+      errors++;
+  }
+  else 
+  {
+    sublist *pqr=getTemp($1,current);
+    ar[point]=pqr->type;
+    point++;
+  }
+
+}
 ;
 
 

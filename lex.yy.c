@@ -1241,7 +1241,7 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 101 "lex.l"
-{ /* Valid string */ } {printf("Ok String \n");return STR;}
+{ /* Valid string */ } {return STR;}
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
@@ -1262,7 +1262,7 @@ YY_RULE_SETUP
 case 45:
 YY_RULE_SETUP
 #line 105 "lex.l"
-printf("ERROR ");yyterminate(); 
+printf("ERROR");yyterminate(); 
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
