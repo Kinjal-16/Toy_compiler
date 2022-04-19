@@ -75,7 +75,7 @@ intable *getable(intable *head_ref, char *key, char *type, char *scope)
     }
     return head_ref;
 }
-void displayList(intable *stnode)
+int displayList(intable *stnode)
 {
     struct intable *tmp;
     if (stnode == NULL)
@@ -87,8 +87,8 @@ void displayList(intable *stnode)
         tmp = stnode;
         while (tmp != NULL)
         {
-            printf(" Data = %s\n", tmp->scope); // prints the data of current node
-            tmp = tmp->next;                    // advances the position of current node
+            printf(" Data = %s\n", tmp->name); // prints the data of current node
+            tmp = tmp->next;                   // advances the position of current node
         }
     }
 }

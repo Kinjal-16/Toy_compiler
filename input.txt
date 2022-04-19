@@ -18,6 +18,7 @@ struct Dept {
 }
 
 void main() { 
+	
 	// this is a procedure
 	bool b;
 	string y;
@@ -25,6 +26,9 @@ void main() {
 	y = "Hello World";
 	f();
 	int aNum;
+	return 9;
+	
+	
    
 }
 
@@ -42,5 +46,7 @@ int f() {
 	aName.id = 1234;
 	aName.isManager = true;
 	// change any of the above types = error!
+	int k;
 	return 5;
+	
 }

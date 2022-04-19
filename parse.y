@@ -26,6 +26,9 @@ int point=0;
 int m=0;
 sublist *hey;
 int flag2=1;
+char * returnStore;
+int ret=0;
+char *jk;
 init(char *name, char *type){
  
   li=putable(name,type,li,str);
@@ -173,7 +176,25 @@ struct: STRUCT ID OPENING_CURLY_BRACES  {
   printf(str);
   printf("\n");
   install($2,"null");  procedure = $2;checkinit();}  
-proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;checkinit();}
+proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {
+  displayList(current);
+  if(checkReturn(jk,current)==1 && strcmp(jk,"void")!=0)
+  {printf("/////////");
+    printf(jk);
+    errors++;
+  
+  }
+  else 
+  {
+    printf("HUJJmmmm");
+    if(strcmp(jk,"void")==0 && ret>=1)
+      errors++;
+  }
+  ret=0;
+  
+  
+  
+  ;procedure = $2;checkinit();}
 ;
 /*
 statement:stmt
@@ -199,7 +220,7 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSIN
   str=temp;
   }
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
-  | RETURN expr SEMICOL {memset(ar, 0, 1000);point=0;}
+  | RETURN expr SEMICOL {returnStore=v;;printf("----");printf(t);memset(ar, 0, 1000);point=0;current=returnT(v,current);ret++;}
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
   | type ID SEMICOL    {installattributes($2,t);}
   | lexp ASSIGN expTem SEMICOL {
@@ -306,13 +327,15 @@ expTem:STR{v="string";}
 exprs: 
     | expr COMMA exprs
 ;
-return_type: INT {t = $1;
+return_type: INT {jk = $1;
 };
-  |BOOL{t = $1;
+  |BOOL{jk = $1;
 };
-  |STRING {t = $1;
+  |STRING {jk = $1;
 };
-  |VOID  {t = $1;
+  |VOID  {jk = "void";
+  printf("???????????");
+  printf(jk);
 };
 type: INT {t = $1;}
   |BOOL {t = $1;}
