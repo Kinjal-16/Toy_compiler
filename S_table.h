@@ -146,10 +146,6 @@ int checkReturn(char *name, sublist *head)
     {
         if (strcmp(ptr->type, "return") == 0)
         {
-            printf("**************");
-            printf(ptr->name);
-            printf("**************");
-            printf(name);
             if (strcmp(ptr->name, name) == 0)
                 return 0;
         }

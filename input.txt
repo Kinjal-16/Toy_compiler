@@ -1,5 +1,5 @@
 struct Name {
-	// this is a set of declarations
+
 	string first_name,
 	string last_name,
 	int id,
@@ -19,21 +19,21 @@ struct Dept {
 
 void main() { 
 	
-	// this is a procedure
+
 	bool b;
 	string y;
 	b = true;
 	y = "Hello World";
 	f();
 	int aNum;
-	return 9;
+	
 	
 	
    
 }
 
 int f() {
-	// scoping works!
+
 	int y;
 	y = 15;
 
@@ -45,8 +45,8 @@ int f() {
 	aName.last_name = "Michael";
 	aName.id = 1234;
 	aName.isManager = true;
-	// change any of the above types = error!
+	
 	int k;
 	return 5;
-	
+	//this should not be considered int k =5; if it is it will fail try removing "//"
 }

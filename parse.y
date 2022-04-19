@@ -166,27 +166,21 @@ struct: STRUCT ID OPENING_CURLY_BRACES  {
   strcat(temp,temp2);
   m++;
   str=temp;
-  
-  printf(str);
-  printf("\n");
 
 }  oneOrMoreDeclarations CLOSING_CURLY_BRACES {
   temp=strremove(temp,rem);
   str=temp;
-  printf(str);
-  printf("\n");
+
   install($2,"null");  procedure = $2;checkinit();}  
 proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {
-  displayList(current);
   if(checkReturn(jk,current)==1 && strcmp(jk,"void")!=0)
-  {printf("/////////");
-    printf(jk);
+  {
     errors++;
   
   }
   else 
   {
-    printf("HUJJmmmm");
+
     if(strcmp(jk,"void")==0 && ret>=1)
       errors++;
   }
@@ -220,7 +214,7 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSIN
   str=temp;
   }
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
-  | RETURN expr SEMICOL {returnStore=v;;printf("----");printf(t);memset(ar, 0, 1000);point=0;current=returnT(v,current);ret++;}
+  | RETURN expr SEMICOL {returnStore=v;memset(ar, 0, 1000);point=0;current=returnT(v,current);ret++;}
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
   | type ID SEMICOL    {installattributes($2,t);}
   | lexp ASSIGN expTem SEMICOL {
@@ -334,8 +328,7 @@ return_type: INT {jk = $1;
   |STRING {jk = $1;
 };
   |VOID  {jk = "void";
-  printf("???????????");
-  printf(jk);
+ 
 };
 type: INT {t = $1;}
   |BOOL {t = $1;}
@@ -423,8 +416,7 @@ lexp: ID
 | ID FULLSTOP ID
 {
 
-    printf($1);
-    printf("\n............");
+
 
   if(get($1,current)==1)
   {
@@ -434,8 +426,7 @@ lexp: ID
   {
 
     sublist *pqr=getTemp($1,current);
-    printf(pqr->type);
-    printf("\n............");
+
 
 
     
@@ -451,17 +442,15 @@ lexp: ID
     if(get($3,pqrs)==1)
     {
       flag=0;
-      printf(pqr->type);
-      printf("\n............");
-      printf("here");
+    
       errors++;
       yyerror;
     }
     else 
     {
-      printf("here");
+     
       sublist *aeou = getTemp($3,pqrs);
-      printf(aeou->type);
+
       
       hey=aeou;
       
