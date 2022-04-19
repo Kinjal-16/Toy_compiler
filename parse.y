@@ -20,6 +20,9 @@ int k=0;
 char *str="main";
 char *temp;
 char *rem;
+int flag=0;
+char *ar[1000];
+int point=0;
 init(char *name, char *type){
  
   li=putable(name,type,li,str);
@@ -173,25 +176,51 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSIN
   str=temp;
   }
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
-  | RETURN expr SEMICOL {printf("Return");}
+  | RETURN expr SEMICOL {printf("Return");memset(ar, 0, 1000);point=0}
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
   | type ID SEMICOL    {installattributes($2,t);}
-  | lexp ASSIGN expr SEMICOL
-  | ID ASSIGN expr SEMICOL {init($1,v);}
+  | lexp ASSIGN expr SEMICOL {memset(ar, 0, 1000);point=0;}
+  | ID ASSIGN expr SEMICOL {init($1,v);memset(ar, 0, 1000);point=0;}
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | ID ASSIGN ID OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | if_stmt
 
 ;
 
-if_stmt: IF OPENING_PARENTHESIS boolop CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES
-| IF OPENING_PARENTHESIS boolop CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  ELSE OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  
+if_stmt: IF OPENING_PARENTHESIS boolop CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES 
 ;  
-expr : NUM {v="int";}
-| STR     {v="string";}
-|TRUE   {v="bool";}
-|FALSE   {v="bool";} 
-|expr op expr
+expr :STR     {v="string";
+
+  
+    ar[point]=v;
+    point++;
+  
+}
+| NUM {v="int";
+  
+  
+  }
+| 
+|TRUE   {v="bool";
+  
+  
+    ar[point]="bool";
+    point++;
+  }
+|FALSE   {v="bool";
+
+
+    ar[point]=v;
+    point++;
+  } 
+|expr op expr {
+
+printf("%s",ar[1]);
+printf("%s",ar[0]);
+
+
+
+}
 |MINUS expr %prec UMINUS
 |NOT expr
 |lexp
@@ -199,6 +228,9 @@ expr : NUM {v="int";}
 ;
 boolop:exprtt bools exprtt
 ;
+
+
+
 exprtt : NUM {v="int";}
 | STR     {v="string";}
 |TRUE   {v="bool";}
