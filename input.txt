@@ -2,24 +2,25 @@ int an(){
 
 
 int b;
-for(b=5;b+7>7;b=b+1;){ 
-  
+for(b=5;b<7;b=b+1;){ 
+
   int e;
   e=5;
-  
+
 }
 for(b=5;b>5;b=b+1;){ 
-  if(a>4)
+   int a;
+  if(a<4)
   then{
-    int o;
+     return a;
+
   }
-else{
-  int l;
-}
+
 
   int z;
   z=10;
-  
+
 }
 int k;
+return 0;
 }

@@ -173,7 +173,7 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSIN
   str=temp;
   }
   | PRINTF OPENING_PARENTHESIS STR CLOSING_PARENTHESIS SEMICOL
-  | RETURN expr SEMICOL 
+  | RETURN expr SEMICOL {printf("Return");}
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
   | type ID SEMICOL    {installattributes($2,t);}
   | lexp ASSIGN expr SEMICOL
@@ -183,27 +183,9 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSIN
   | if_stmt
 
 ;
-boolop:exprtt bools exprtt
-;
-if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES  {
-  temp = (char *)malloc(strlen(str)+3);
-  rem=(char *)malloc(20);
-  char *temp2 =(char *)malloc(20);
-  strcat(temp,str);
-  strcat(temp,"if");
-  sprintf(temp2, "%d", j);
-  strcat(rem,"if");
-  strcat(rem, temp2);
-  strcat(temp,temp2);
-  j++;
-  str=temp;
-  
 
-}zeroOrMoreStatements CLOSING_CURLY_BRACES  {
-  temp=strremove(temp,rem);
-  str=temp;
-  }
-| IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  ELSE OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  
+if_stmt: IF OPENING_PARENTHESIS boolop CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES
+| IF OPENING_PARENTHESIS boolop CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  ELSE OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  
 ;  
 expr : NUM {v="int";}
 | STR     {v="string";}
@@ -214,6 +196,8 @@ expr : NUM {v="int";}
 |NOT expr
 |lexp
 |OPENING_PARENTHESIS expr CLOSING_PARENTHESIS
+;
+boolop:exprtt bools exprtt
 ;
 exprtt : NUM {v="int";}
 | STR     {v="string";}
@@ -254,7 +238,13 @@ zeroOrMoreStatements:
 declaration: type ID   { installattributes($2,t);   }
 ;
 
-
+returnexp:ID
+|NUM {v="int";}
+| STR     {v="string";}
+|TRUE   {v="bool";}
+|FALSE   {v="bool";} 
+|OPENING_PARENTHESIS returnexp CLOSING_PARENTHESIS
+;
 
 
 op: PLUS|MINUS|MULTIPLY|DIVIDE|MOD|AND|OR|EQUALS|GREATER_THAN|GREATER_THAN_EQUALS|LESS_THAN|LESS_THAN_EQUALS|NOT_EQUALS

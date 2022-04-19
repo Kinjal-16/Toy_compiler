@@ -112,13 +112,13 @@ void displayTable()
         printf("\n");
     }
 }
-sublist *returnT(char *name, sublist *head)
+sublist *returnT(char *type, sublist *head)
 {
     sublist *ptr;
     ptr = (sublist *)malloc(sizeof(sublist));
-    ptr->name = (char *)malloc(strlen(name) + 1);
+    ptr->name = (char *)malloc(strlen(type) + 1);
     ptr->type = (char *)malloc(strlen("return") + 1);
-    strcpy(ptr->name, name);
+    strcpy(ptr->name, type);
     strcpy(ptr->type, "return");
     ptr->next = (struct sublist *)head;
     head = ptr;
