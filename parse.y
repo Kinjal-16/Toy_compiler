@@ -197,7 +197,8 @@ expr :STR     {v="string";
   
 }
 | NUM {v="int";
-  
+  ar[point]=v;
+    point++;
   
   }
 | 
@@ -215,31 +216,77 @@ expr :STR     {v="string";
   } 
 |expr op expr {
 
-printf("%s",ar[1]);
-printf("%s",ar[0]);
+  char *z=ar[0];
+  for(int i=0;i<point;i++)
+  {
+    if(strcmp(z,ar[i])!=0)
+    {
+      errors++;
+      break;
+    }
+  }
+  memset(ar, 0, 1000);point=0;
 
 
 
 }
-|MINUS expr %prec UMINUS
-|NOT expr
+|MINUS expr %prec UMINUS {memset(ar, 0, 1000);point=0;}
+|NOT expr  {memset(ar, 0, 1000);point=0;}
 |lexp
-|OPENING_PARENTHESIS expr CLOSING_PARENTHESIS
-;
-boolop:exprtt bools exprtt
+|OPENING_PARENTHESIS expr CLOSING_PARENTHESIS {memset(ar, 0, 1000);point=0;}
 ;
 
 
 
-exprtt : NUM {v="int";}
-| STR     {v="string";}
-|TRUE   {v="bool";}
-|FALSE   {v="bool";} 
-|MINUS expr %prec UMINUS
-|NOT expr
-|lexp
-|OPENING_PARENTHESIS expr CLOSING_PARENTHESIS
+boolop:exprtt bools exprtt{
+
+  char *z=ar[0];
+  for(int i=0;i<point;i++)
+  {
+    if(strcmp(z,ar[i])!=0)
+    {
+      errors++;
+      break;
+    }
+  }
+  memset(ar, 0, 1000);point=0;
+}
 ;
+
+
+
+exprtt :STR{v="string";
+
+  
+    ar[point]=v;
+    point++;
+  
+}
+| NUM {v="int";
+  ar[point]=v;
+    point++;
+  
+  }
+| 
+|TRUE   {v="bool";
+  
+  
+    ar[point]="bool";
+    point++;
+  }
+|FALSE   {v="bool";
+
+
+    ar[point]=v;
+    point++;
+  } 
+|MINUS exprtt %prec UMINUS {memset(ar, 0, 1000);point=0;}
+|NOT exprtt 
+|blexp
+|OPENING_PARENTHESIS exprtt CLOSING_PARENTHESIS
+;
+
+
 exprs: 
     | expr COMMA exprs
 ;
@@ -318,7 +365,20 @@ term: NUMBER
   | '(' expr ')'
 ;
 */
-lexp: ID
+blexp: ID {
+  if(get($1,current)==1)
+  {
+      errors++;
+  }
+  else 
+  {
+    sublist *pqr=getTemp($1,current);
+    ar[point]=pqr->type;
+    point++;
+  }
+}
+;
+lexp: ID 
   | ID FULLSTOP lexp
 ;
 

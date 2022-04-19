@@ -94,7 +94,20 @@ int *get(char *sym, sublist *head)
 
     return 1;
 }
+sublist *getTemp(char *sym, sublist *head)
+{
+    sublist *ptr;
+    for (ptr = head; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
+    {
+        if (strcmp(ptr->name, sym) == 0)
+        {
 
+            return ptr;
+        }
+    }
+
+    return 1;
+}
 void displayTable()
 {
     symrec *ptr;

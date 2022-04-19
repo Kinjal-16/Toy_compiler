@@ -1,15 +1,14 @@
 int an(){
 
 
-int b;
+bool b;
+b=false;
 
-for(b=5;a<5;b=b+1;){ 
-
-  int e;
-  e=5;
+if(b==true) then
+{
 
 }
-b="Hey";
+
 int k;
 return 0;
 }
