@@ -29,6 +29,9 @@ int flag2=1;
 char * returnStore;
 int ret=0;
 char *jk;
+int kin=0;
+int pin=0;
+int sig=0;
 init(char *name, char *type){
  
   li=putable(name,type,li,str);
@@ -41,7 +44,7 @@ checkinit(){
   {
     char *saumya=ptr->scope;
     
-
+   
     
     li=getable(li,ptr->name,ptr->type,saumya);
     if(li==NULL)
@@ -225,11 +228,53 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSIN
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | ID ASSIGN ID OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | if_stmt
+  | if_stmt ELSE OPENING_CURLY_BRACES  {
+  temp = (char *)malloc(strlen(str)+14);
+  rem=(char *)malloc(20);
+  char *temp2 =(char *)malloc(20);
+  strcat(temp,str);
+  strcat(temp,"else");
+  sprintf(temp2, "%d", sig);
+  strcat(rem,"else");
+  strcat(rem, temp2);
+  strcat(temp,temp2);
+  sig++;
+  str=temp;
+  
+  
+  } zeroOrMoreStatements CLOSING_CURLY_BRACES {
+  
+  temp=strremove(temp,rem);
+  str=temp;
+
+  
+  } 
+  
 
 ;
 
-if_stmt: IF OPENING_PARENTHESIS boolop CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES 
-;  
+if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS {
+
+  
+  temp = (char *)malloc(strlen(str)+14);
+  rem=(char *)malloc(20);
+  char *temp2 =(char *)malloc(20);
+  strcat(temp,str);
+  strcat(temp,"if");
+  sprintf(temp2, "%d", kin);
+  strcat(rem,"if");
+  strcat(rem, temp2);
+  strcat(temp,temp2);
+  kin++;
+  str=temp;
+  
+
+}  THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {
+  temp=strremove(temp,rem);
+  str=temp;
+  
+  } 
+; 
 expr :STR     {v="string";
 
   
@@ -348,6 +393,8 @@ zeroOrMoreStatements:
   | if_stmt zeroOrMoreStatements
   | stmt zeroOrMoreStatements
 ;
+
+
 declaration: type ID   { installattributes($2,t);   }
 ;
 
