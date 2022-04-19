@@ -23,6 +23,7 @@ char *rem;
 int flag=0;
 char *ar[1000];
 int point=0;
+int m=0;
 init(char *name, char *type){
  
   li=putable(name,type,li,str);
@@ -34,7 +35,8 @@ checkinit(){
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
     char *saumya=ptr->scope;
-    
+    displayTable();
+    displayList(li);
 
     
     li=getable(li,ptr->name,ptr->type,saumya);
@@ -148,7 +150,24 @@ prog: proc progm
 progm:
   | proc progm
   | struct progm
-struct: STRUCT ID OPENING_CURLY_BRACES oneOrMoreDeclarations CLOSING_CURLY_BRACES {install($2,"null");  procedure = $2;}  
+struct: STRUCT ID OPENING_CURLY_BRACES  {
+  temp = (char *)malloc(strlen(str)+14);
+  rem=(char *)malloc(20);
+  char *temp2 =(char *)malloc(20);
+  strcat(temp,str);
+  strcat(temp,"struct");
+  sprintf(temp2, "%d", m);
+  strcat(rem,"struct");
+  strcat(rem, temp2);
+  strcat(temp,temp2);
+  m++;
+  str=temp;
+  
+
+}  oneOrMoreDeclarations CLOSING_CURLY_BRACES {
+  temp=strremove(temp,rem);
+  str=temp;
+  install($2,"null");  procedure = $2;}  
 proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;checkinit();}
 ;
 /*

@@ -4,10 +4,12 @@ struct Name {
 	string last_name,
 	int id,
 	int supervisorID,
-	bool isManager
+	bool isManager,
+    int a
 }
 struct Employee {
-	Name name
+	Name name,
+    int a
 }
 struct Dept {
 	Employee head
