@@ -16,6 +16,7 @@ char *v;
 intable *li=NULL;
 int i=0;
 int j=0;
+int k=0;
 char *str="main";
 char *temp;
 char *rem;
@@ -26,8 +27,8 @@ init(char *name, char *type){
 }
 checkinit(){
   sublist *ptr;
-   
-   
+   displayTable();
+   displayList(li);
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
     char *saumya=ptr->scope;
@@ -183,10 +184,42 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL  stmt CLOSING_
 
 ;
 
-if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES
-  | IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES ELSE OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES
-;
-expr : NUM {v="int"}
+if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES  {
+  temp = (char *)malloc(strlen(str)+3);
+  rem=(char *)malloc(20);
+  char *temp2 =(char *)malloc(20);
+  strcat(temp,str);
+  strcat(temp,"if");
+  sprintf(temp2, "%d", j);
+  strcat(rem,"if");
+  strcat(rem, temp2);
+  strcat(temp,temp2);
+  j++;
+  str=temp;
+  
+
+}zeroOrMoreStatements CLOSING_CURLY_BRACES  {
+  temp=strremove(temp,rem);
+  str=temp;
+  }
+| IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES  {
+  temp = (char *)malloc(strlen(str)+3);
+  rem=(char *)malloc(20);
+  char *temp2 =(char *)malloc(20);
+  strcat(temp,str);
+  strcat(temp,"if");
+  sprintf(temp2, "%d", j);
+  strcat(rem,"if");
+  strcat(rem, temp2);
+  strcat(temp,temp2);
+  j++;
+  str=temp;
+  }zeroOrMoreStatements CLOSING_CURLY_BRACES  ELSE OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  
+   {
+  temp=strremove(temp,rem);
+  str=temp;
+  }
+expr : NUM {v="int";}
 | STR     {v="string";}
 |TRUE   {v="bool";}
 |FALSE   {v="bool";} 

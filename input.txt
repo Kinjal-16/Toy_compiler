@@ -9,12 +9,17 @@ for(b=5;b<4;b=b+1;){
   
 }
 for(b=5;b<4;b=b+1;){ 
-  
+  if(a>4)
+  then{
+    int o;
+  }
+else{
+  int l;
+}
+
   int z;
   z=10;
   
 }
 int k;
-z=0;
-
 }
