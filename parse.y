@@ -24,6 +24,8 @@ int flag=0;
 char *ar[1000];
 int point=0;
 int m=0;
+sublist *hey;
+int flag2=1;
 init(char *name, char *type){
  
   li=putable(name,type,li,str);
@@ -35,8 +37,7 @@ checkinit(){
   for (ptr = current; ptr != (sublist *)0; ptr = (sublist *)ptr->next)
   {
     char *saumya=ptr->scope;
-    displayTable();
-    displayList(li);
+    
 
     
     li=getable(li,ptr->name,ptr->type,saumya);
@@ -163,11 +164,15 @@ struct: STRUCT ID OPENING_CURLY_BRACES  {
   m++;
   str=temp;
   
+  printf(str);
+  printf("\n");
 
 }  oneOrMoreDeclarations CLOSING_CURLY_BRACES {
   temp=strremove(temp,rem);
   str=temp;
-  install($2,"null");  procedure = $2;}  
+  printf(str);
+  printf("\n");
+  install($2,"null");  procedure = $2;checkinit();}  
 proc: return_type ID OPENING_PARENTHESIS zeroOrMoreDeclarations CLOSING_PARENTHESIS OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES {install($2,t);procedure = $2;checkinit();}
 ;
 /*
@@ -197,7 +202,10 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSIN
   | RETURN expr SEMICOL {memset(ar, 0, 1000);point=0;}
   | OPENING_CURLY_BRACES stmt_seq CLOSING_CURLY_BRACES
   | type ID SEMICOL    {installattributes($2,t);}
-  | lexp ASSIGN expr SEMICOL {memset(ar, 0, 1000);point=0;}
+  | lexp ASSIGN expTem SEMICOL {
+    if(hey!=NULL)
+      if(strcmp(v,hey->type)!=0)
+        errors++;memset(ar, 0, 1000);point=0;}
   | ID ASSIGN expr SEMICOL {init($1,v);memset(ar, 0, 1000);point=0;}
   | ID  OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
   | ID ASSIGN ID OPENING_PARENTHESIS exprs CLOSING_PARENTHESIS SEMICOL
@@ -289,6 +297,11 @@ exprtt :STR{v="string";
 |OPENING_PARENTHESIS exprtt CLOSING_PARENTHESIS
 ;
 
+expTem:STR{v="string";}
+| NUM {v="int"; }
+|TRUE   {v="bool";}
+|FALSE   {v="bool";} 
+;
 
 exprs: 
     | expr COMMA exprs
@@ -386,18 +399,54 @@ blexp: ID {
 lexp: ID
 | ID FULLSTOP ID
 {
-  
+
+    printf($1);
+    printf("\n............");
+
   if(get($1,current)==1)
   {
       errors++;
   }
   else 
   {
-    sublist *pqr=getTemp($1,current);
-    ar[point]=pqr->type;
-    point++;
-  }
 
+    sublist *pqr=getTemp($1,current);
+    printf(pqr->type);
+    printf("\n............");
+
+
+    
+    
+    
+    sublist *pqrs=getlist(pqr->type);
+    if(pqrs==0)
+    {
+      errors++;
+    }
+    else 
+    {
+    if(get($3,pqrs)==1)
+    {
+      flag=0;
+      printf(pqr->type);
+      printf("\n............");
+      printf("here");
+      errors++;
+      yyerror;
+    }
+    else 
+    {
+      printf("here");
+      sublist *aeou = getTemp($3,pqrs);
+      printf(aeou->type);
+      
+      hey=aeou;
+      
+      ar[point]=pqr->type;
+      point++;
+    }
+    }
+  }
 }
 ;
 

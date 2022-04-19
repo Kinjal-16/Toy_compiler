@@ -5,7 +5,9 @@ struct Name {
 	int id,
 	int supervisorID,
 	bool isManager,
-    int a
+   int a
+   
+    
 }
 struct Employee {
 	Name name,
@@ -23,6 +25,7 @@ void main() {
 	y = "Hello World";
 	f();
 	int aNum;
+   
 }
 
 int f() {
@@ -33,6 +36,7 @@ int f() {
 	
 	
 	Name aName;
+   aName.a=5;
 	aName.first_name = "Jordan";
 	aName.last_name = "Michael";
 	aName.id = 1234;
