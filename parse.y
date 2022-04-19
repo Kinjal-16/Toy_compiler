@@ -154,7 +154,7 @@ statement:stmt
 	| prog
 ;*/
 
-stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL  stmt CLOSING_PARENTHESIS  OPENING_CURLY_BRACES {
+stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL boolop SEMICOL  stmt CLOSING_PARENTHESIS  OPENING_CURLY_BRACES {
   temp = (char *)malloc(strlen(str)+4);
   rem=(char *)malloc(20);
   char *temp2 =(char *)malloc(20);
@@ -183,7 +183,8 @@ stmt: FOR OPENING_PARENTHESIS ID ASSIGN expr SEMICOL expr SEMICOL  stmt CLOSING_
   | if_stmt
 
 ;
-
+boolop:exprtt bools exprtt
+;
 if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES  {
   temp = (char *)malloc(strlen(str)+3);
   rem=(char *)malloc(20);
@@ -202,23 +203,8 @@ if_stmt: IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRAC
   temp=strremove(temp,rem);
   str=temp;
   }
-| IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES  {
-  temp = (char *)malloc(strlen(str)+3);
-  rem=(char *)malloc(20);
-  char *temp2 =(char *)malloc(20);
-  strcat(temp,str);
-  strcat(temp,"if");
-  sprintf(temp2, "%d", j);
-  strcat(rem,"if");
-  strcat(rem, temp2);
-  strcat(temp,temp2);
-  j++;
-  str=temp;
-  }zeroOrMoreStatements CLOSING_CURLY_BRACES  ELSE OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  
-   {
-  temp=strremove(temp,rem);
-  str=temp;
-  }
+| IF OPENING_PARENTHESIS expr CLOSING_PARENTHESIS THEN OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  ELSE OPENING_CURLY_BRACES zeroOrMoreStatements CLOSING_CURLY_BRACES  
+;  
 expr : NUM {v="int";}
 | STR     {v="string";}
 |TRUE   {v="bool";}
@@ -229,7 +215,15 @@ expr : NUM {v="int";}
 |lexp
 |OPENING_PARENTHESIS expr CLOSING_PARENTHESIS
 ;
-
+exprtt : NUM {v="int";}
+| STR     {v="string";}
+|TRUE   {v="bool";}
+|FALSE   {v="bool";} 
+|MINUS expr %prec UMINUS
+|NOT expr
+|lexp
+|OPENING_PARENTHESIS expr CLOSING_PARENTHESIS
+;
 exprs: 
     | expr COMMA exprs
 ;
@@ -264,6 +258,9 @@ declaration: type ID   { installattributes($2,t);   }
 
 
 op: PLUS|MINUS|MULTIPLY|DIVIDE|MOD|AND|OR|EQUALS|GREATER_THAN|GREATER_THAN_EQUALS|LESS_THAN|LESS_THAN_EQUALS|NOT_EQUALS
+;
+bools: MOD|AND|OR|EQUALS|GREATER_THAN|GREATER_THAN_EQUALS|LESS_THAN|LESS_THAN_EQUALS|NOT_EQUALS
+;
 stmt_seq:
   | stmt stmt_seq
 ;
