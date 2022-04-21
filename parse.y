@@ -417,35 +417,7 @@ stmt_seq:
 
 
 
-/*
-expr: addsub
-  | '-' expr
-  | '!' expr
 
-addsub: factor
-  | expr '+' expr
-  | expr '-' expr
-;
-
-factor: equality
-  | expr '*' expr
-  | expr '/' expr
-;
-
-equality: term 
-  | expr OR expr
-  | expr MOD expr
-  | expr AND expr
-;
-
-term: NUMBER
-  | STRINGLITERAL
-  | TRUE
-  | FALSE
-  | lexp
-  | '(' expr ')'
-;
-*/
 blexp: ID {
   if(get($1,current)==1)
   {

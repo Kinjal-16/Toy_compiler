@@ -1,24 +1,23 @@
-/* A Bison parser, made by GNU Bison 2.3.  */
+
+/* A Bison parser, made by GNU Bison 2.4.1.  */
 
 /* Skeleton interface for Bison's Yacc-like parsers in C
-
-   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+   
+      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
    Free Software Foundation, Inc.
-
-   This program is free software; you can redistribute it and/or modify
+   
+   This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
-   any later version.
-
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+   
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-
+   
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -29,9 +28,10 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-
+   
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
+
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -81,66 +81,30 @@
      UMINUS = 297
    };
 #endif
-/* Tokens.  */
-#define NUM 258
-#define ID 259
-#define STR 260
-#define INT 261
-#define BOOL 262
-#define STRING 263
-#define VOID 264
-#define EQUALS 265
-#define NOT_EQUALS 266
-#define NOT 267
-#define LESS_THAN 268
-#define LESS_THAN_EQUALS 269
-#define GREATER_THAN 270
-#define GREATER_THAN_EQUALS 271
-#define OPENING_PARENTHESIS 272
-#define CLOSING_PARENTHESIS 273
-#define OPENING_CURLY_BRACES 274
-#define CLOSING_CURLY_BRACES 275
-#define PLUS 276
-#define MINUS 277
-#define MULTIPLY 278
-#define MOD 279
-#define DIVIDE 280
-#define IF 281
-#define THEN 282
-#define ELSE 283
-#define TRUE 284
-#define FALSE 285
-#define SEMICOL 286
-#define STRUCT 287
-#define PRINTF 288
-#define ASSIGN 289
-#define FULLSTOP 290
-#define COMMA 291
-#define FOR 292
-#define RETURN 293
-#define EQU 294
-#define AND 295
-#define OR 296
-#define UMINUS 297
-
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
+{
+
+/* Line 1676 of yacc.c  */
 #line 126 "parse.y"
-{ 
+ 
   char *id;
   int a;
   char *string;
-}
-/* Line 1529 of yacc.c.  */
-#line 139 "parse.tab.h"
-	YYSTYPE;
+
+
+
+/* Line 1676 of yacc.c  */
+#line 102 "parse.tab.h"
+} YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
-# define YYSTYPE_IS_TRIVIAL 1
 #endif
 
 extern YYSTYPE yylval;
+
 

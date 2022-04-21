@@ -1,29 +1,62 @@
-// this file contains examples of well typed boolean expressions in IF statements!
+struct Name {
+
+	string first_name,
+	string last_name,
+	int id,
+	int supervisorID,
+	bool isManager,
+   int a
+   
+    
+}
+struct Employee {
+	Name name,
+    int a
+}
+struct Dept {
+	Employee head
+}
+
 void main() { 
-	if (true) then
-	{
-		printf("hi!");
-	}
+	
 
-	int x;
+	bool b;
+	string y;
+	b = true;
+	y = "Hello World";
+	f();
+	int aNum;
+	
+	
+	
+   
+}
 
-	// if statements apparently only have one statement according to spec?
-	if (9 != 8) then
-	{
-		printf("hola!");
-	}
+int f() {
 
-	if (23 == (5 + 4)) then
-	{
-		x = 3;
-	}
-	else
-	{
-		x = 15;
-	}
+	int y;
+	y = 15;
+	int a;
+	if(y==15) then
+		{
+			
+		}
+		else
+		{
 
-	if (23 == (5 * 4)) then
-	{
-		printf("hi again!");
-	}
+			a=5;
+			
+		}
+	
+	
+	Name aName;
+   aName.a=5;
+	aName.first_name = "Jordan";
+	aName.last_name = "Michael";
+	aName.id = 1234;
+	aName.isManager = true;
+	
+	int k;
+	return 5;
+	//this should not be considered int k =5; if it is it will fail try removing "//"
 }
