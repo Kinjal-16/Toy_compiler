@@ -4,11 +4,10 @@ It Uses FLex for the Lexical Analyzer and BIson for Parser and Semantic Analyzin
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 To run the file just run Makefile and to test your code just add the code to the input.txt. 
-/
-/
-/
-/
-/
-/
-/
+\
+\
+\
+\
+\
+\
 To Form Input test cases and to undesrtand the Toy Language please read Assignment Description.
