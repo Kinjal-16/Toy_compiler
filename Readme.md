@@ -1,12 +1,6 @@
-This  is  a TOY complier made as an assignment for Complier Design -I CSU3307 
+This is a Compiler made as an assignment for Compiler Design MOduler at Trinity College Dublin\
+It uses C Language\
+It Uses FLex for the Lexical Analyzer and BIson for Parser and Semantic Analyzing 
 
-lex.l ---- lexer Analysis.
-
-
-you can clone this repository and run the components
-
-
-
-------------------------------------
-
-further Instructions to be added on completiton .
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+To run the file just run Makefile and to test your code just add the code to the input.txt. 
