@@ -1,4 +1,4 @@
-This is a Compiler made as an assignment for Compiler Design MOduler at Trinity College Dublin\
+This is a Compiler made as an assignment for the Compiler Design Module at Trinity College Dublin\
 It uses C Language\
 It Uses FLex for the Lexical Analyzer and BIson for Parser and Semantic Analyzing 
 
